@@ -1,0 +1,28 @@
+{
+  "name": "tku-email-templates",
+  "version": "1.0.0",
+  "description": "Used to create html email templates for Varaamo.",
+  "main": "gulpfile.babel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/gulp",
+    "build:finnish":"./node_modules/.bin/gulp build:finnish",
+    "build:finnish_only":"./node_modules/.bin/gulp build:finnish_only",
+    "build:swedish":"./node_modules/.bin/gulp build:swedish",
+    "build:swedish_only":"./node_modules/.bin/gulp build:swedish_only"
+  },
+  "author": "HH",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "gulp": "^4.0.2",
+    "gulp-inline-css": "^3.3.2",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0"
+  },
+  "dependencies": {
+    "gulp-htmlmin": "^5.0.1"
+  }
+}
