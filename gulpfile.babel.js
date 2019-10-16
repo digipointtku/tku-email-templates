@@ -92,7 +92,7 @@ function inlineFI() {
     .pipe(replace(feedback_links.src,feedback_links.fi))
     .pipe(replace(map_urls.src,map_urls.fi))
     .pipe(inlineCss({
-        url: 'file://' + __dirname + '/pages/', // specifies the base path for the stylesheet links
+        url: 'file://' + __dirname + '/pages/fi/', // specifies the base path for the stylesheet links
         applyStyleTags: true,
         applyLinkTags: true,
         removeStyleTags: true,
@@ -116,7 +116,7 @@ function inlineSV() {
     .pipe(replace(feedback_links.src,feedback_links.sv))
     .pipe(replace(map_urls.src,map_urls.sv))
     .pipe(inlineCss({
-        url: 'file://' + __dirname + '/pages/', // specifies the base path for the stylesheet links
+        url: 'file://' + __dirname + '/pages/sv/', // specifies the base path for the stylesheet links
         applyStyleTags: true,
         applyLinkTags: true,
         removeStyleTags: true,
