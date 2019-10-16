@@ -22,4 +22,4 @@ To build the Swedish templates.
 npm run-script build:swedish
 ```
 
-Pages are always compiled to 'docs/fi' or 'docs/sv'.
+Pages are always compiled to 'build/fi' or 'build/sv'.
