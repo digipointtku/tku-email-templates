@@ -1,25 +1,25 @@
-
 import gulp from 'gulp';
 import inlineCss from 'gulp-inline-css';
 import htmlmin from 'gulp-htmlmin';
-import rename from 'gulp-rename';
 import replace from 'gulp-replace';
 
-/**
- * Used in the copycss function
- * src: path to turku-custom.css, contents of this get copied to dest so add new stuff here
- * filename: name of the target file
- * dest: path to target folder
- */
-const css_path = { src: 'pages/fi/css/turku-custom.css', filename: 'turku-custom' , dest: 'pages/sv/css/'}
+
 
 /**
  * inline_path: path including all .html files in target folder is used in inlineFI/inlineSV
  * minify_path: path including all .html files in the build folder which is used in minifyFI/minifySV
  * dest: path to build folders
  */
-const fi = { inline_path: './pages/fi/*.html', minify_path: 'build/fi/*.html', dest: 'build/fi/' };
-const sv = { inline_path: './pages/sv/*.html', minify_path: 'build/sv/*.html', dest: 'build/sv/' };
+const fi = {
+    inline_path: './pages/fi/*.html',
+    minify_path: 'build/fi/*.html',
+    dest: 'build/fi/'
+};
+const sv = {
+    inline_path: './pages/sv/*.html',
+    minify_path: 'build/sv/*.html',
+    dest: 'build/sv/'
+};
 
 
 /**
@@ -39,10 +39,11 @@ const feedback_links = {
  * fi: url to the Finnish version of the mapservice
  * sv: url to the Swedish version of the mapservice
  * 
- * ie in Finnish files the map url will initially look like:
  * '<--map_url-->' + unit_map_service_id|string + '#!route-details'
+ * 
  * and after replacing
- * 'https://palvelukartta.turku.fi/unit/' + unit_map_service_id|string + '#!route-details'
+ * 
+ * 'https://palvelukartta.turku....' + unit_map_service_id|string + '#!route-details'
  */
 const map_urls = {
     src: "<--map_url-->",
@@ -52,13 +53,14 @@ const map_urls = {
 
 /**
  * src: string in the .html files that will be replaced.
- * fi: url to the Turku logo
- * sv: url to the Åbo logo
+ * fi: url to the Turku logo.
+ * sv: url to the Åbo logo.
  * 
- * ie in Finnish files the <img> for the logo will initially look like:
  * <img src='<--turku_logo-->' .../>
+ * 
  * and after replacing
- * <img src='http://www.turku.fi/sites/default/files/styles/site_logo/public/sites/all/themes/custom/driveturku/images/sprites/logo.png' .../>
+ * 
+ * <img src='http://www.turku.fi/sites/...' .../>
  */
 const logo_urls = {
     src: "<--turku_logo-->",
@@ -70,19 +72,17 @@ const logo_urls = {
  * Gulp tasks.
  * See https://gulpjs.com/ 
  */
-gulp.task('copy:css', gulp.series(copycss));
 gulp.task('build:finnish', gulp.series(inlineFI, minifyFI));
-gulp.task('build:finnish_only', gulp.series('copy:css','build:finnish'));
 gulp.task('build:swedish', gulp.series(inlineSV, minifySV));
-gulp.task('build:swedish_only', gulp.series('copy:css','build:swedish'));
-gulp.task('build', gulp.series('copy:css', 'build:finnish', 'build:swedish'));
-gulp.task('default', gulp.series('copy:css', 'build:finnish', 'build:swedish'));
+gulp.task('build:all', gulp.series('build:finnish', 'build:swedish'));
+gulp.task('default', gulp.series('build:finnish', 'build:swedish'));
 
 /**
  * First replaces placeholder strings(<--feedback/map_url/turku_logo-->) with correct Finnish urls,
  * then inlines all css(from css files in /css subfolder) before moving the final product to correct Finnish folder/subfolder.
  * 
  * info on replace/inlineCss:
+ * 
  * https://www.npmjs.com/package/gulp-replace
  * https://www.npmjs.com/package/gulp-inline-css
  */
@@ -92,6 +92,7 @@ function inlineFI() {
     .pipe(replace(feedback_links.src,feedback_links.fi))
     .pipe(replace(map_urls.src,map_urls.fi))
     .pipe(inlineCss({
+        url: 'file://' + __dirname + '/pages/', // specifies the base path for the stylesheet links
         applyStyleTags: true,
         applyLinkTags: true,
         removeStyleTags: true,
@@ -103,7 +104,9 @@ function inlineFI() {
 /**
  * First replaces placeholder strings(<--feedback/map_url/turku_logo-->) with correct Swedish urls,
  * then inlines all css(from css files in /css subfolder) before moving the final product to correct Swedish folder/subfolder.
+ * 
  * info on replace/inlineCss:
+ * 
  * https://www.npmjs.com/package/gulp-replace
  * https://www.npmjs.com/package/gulp-inline-css
  */
@@ -113,6 +116,7 @@ function inlineSV() {
     .pipe(replace(feedback_links.src,feedback_links.sv))
     .pipe(replace(map_urls.src,map_urls.sv))
     .pipe(inlineCss({
+        url: 'file://' + __dirname + '/pages/', // specifies the base path for the stylesheet links
         applyStyleTags: true,
         applyLinkTags: true,
         removeStyleTags: true,
@@ -142,19 +146,4 @@ function minifySV() {
         collapseWhitespace: true
     })).pipe(gulp.dest(sv.dest))
 }
-
-
-/**
- * Copies the contents of pages/fi/css/turku-custom.css to pages/sv/css/turku-custom.css.
- * The contents of sv/css/turku-custom get replaced so ADD ALL NEW CSS STUFF TO THE FINNISH ONE(fi/css/turku-custom).
- * 
- * info on rename:
- * https://www.npmjs.com/package/gulp-rename
- */
-function copycss() {
-    return gulp.src(css_path.src)
-    .pipe(rename({ basename: css_path.filename}))
-    .pipe(gulp.dest(css_path.dest))
-}
-
 

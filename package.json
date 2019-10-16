@@ -5,13 +5,11 @@
   "main": "gulpfile.babel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/gulp",
+    "build": "./node_modules/.bin/gulp build:all",
     "build:finnish":"./node_modules/.bin/gulp build:finnish",
-    "build:finnish_only":"./node_modules/.bin/gulp build:finnish_only",
-    "build:swedish":"./node_modules/.bin/gulp build:swedish",
-    "build:swedish_only":"./node_modules/.bin/gulp build:swedish_only"
+    "build:swedish":"./node_modules/.bin/gulp build:swedish"
   },
-  "author": "HH",
+  "author": "",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.6.3",
