@@ -21,3 +21,19 @@
 .text-gray {
     color: gray;
 }
+
+.main_logo {
+    padding: 10px 0 10px 16px;
+}
+
+.main_content {
+    padding-top: 16px;
+}
+
+.footer_container {
+    padding-top: 16px;
+}
+
+.copyright-text {
+    margin: 0;
+}

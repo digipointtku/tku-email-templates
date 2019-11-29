@@ -22,7 +22,7 @@
                                     <tr>
                                         <th class="bg-black main_logo">
                                             <img src="<--turku_logo-->"
-                                                alt="Åbo" />
+                                                alt="Turun vaakuna" />
                                         </th>
                                         <th class="expander"></th>
                                     </tr>
@@ -30,35 +30,38 @@
                                 <table class="row">
                                     <tr>
                                         <th class="large-12 first last columns main_content">
-                                            <p>Hej,</p>
-                                            <p>En kund har gjort följande bokning:</p>
+                                            <p>Hello,</p>
+                                            <p>Thank you for reserving. The reservation has been confirmed.</p>
+                                            <p>Reservation details:</p>
                                             <hr />
-                                            <p>Utrymme: {{ resource }}</p>
-                                            <p>Plats: {{ unit }}</p>
-                                            <p>Börjar: {{ begin }}</p>
-                                            <p>Slutar: {{ end }}</p>
+                                            <p>Resource: {{ resource }}</p>
+                                            <p>Unit: {{ unit }}</p>
+                                            <p>Time: {{ bulk_email_context['first_reservation'].get('begin').split(' ')[1] }} - {{ bulk_email_context['first_reservation'].get('end').split(' ')[1] }}</p>
+                                            <p>Dates:</p>
+                                            {% if bulk_email_context is defined and bulk_email_context %}
+                                            <ul>
+                                                {% for date in bulk_email_context['dates'] %}
+                                                <li>{{ date.get('begin').split(' ')[0] }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% endif %}
                                             <p></p>
-                                            <p>Bokarens namn: {{ reserver_name }}</p>
-                                            <p>Bokarens e-post: {{ reserver_email_address }}</p>
+                                            <p>Reserver name: {{ reserver_name }}</p>
+                                            <p>Reserver email: {{ reserver_email_address }}</p>
                                             {% if event_subject is defined and event_subject %}
-                                                <p>Bokningens namn: {{ event_subject }}</p>
+                                                <p>Name of reservation: {{ event_subject }}</p>
                                             {% endif %}
                                             {% if event_description is defined and event_description %}
-                                                <p>Bokningens beskrivning: {{ event_description }}</p>
+                                                <p>Reservation description: {{ event_description }}</p>
                                             {% endif %}
                                             {% if number_of_participants is defined %}
-                                                <p>Antal deltagare: {{ number_of_participants }}</p>
+                                                <p>Number of participants: {{ number_of_participants }}</p>
                                             {% endif %}
-                                            {% if require_assistance is defined and require_assistance %}
-                                                <p>Bokaren behöver instruering.</p>
+                                            {% if unit is defined %}
+                                            {% set linkUrl = '<--map_url-->' + unit_map_service_id|string + '#!route-details' %}
+                                                <a href="{{ linkUrl }}">Show location on the servicemap</a>
                                             {% endif %}
-                                            {% if extra_question is defined and extra_question %}
-                                                <p>Tilläggsfråga: {{ extra_question }}</p>
-                                            {% endif %}
-                                            {% if extra_content is defined and extra_content %}
-                                            {{ extra_content }}
-                                            {% endif %}
-                                            
+                                            <p>Best regards, Varaamo</p>
                                         </th>
                                         <th class="expander"></th>
                                     </tr>
@@ -67,8 +70,8 @@
                                 <table class="row">
                                     <tr>
                                         <th class="large-12 first last columns bg-black footer_container">
-                                            <p class="text-white copyright-text">© Åbo Stad - Varaamo</p>
-                                            <small>Du kan inte svara på detta meddelande. Kontaktuppgifter finns på Varaamos webbsidor. I ärenden som gäller bokningar kan du kontakta den som tillhandahåller utrymmena. Du kan skicka feedback <a href="<--feedback-->">här</a>.</small>
+                                            <p class="text-white copyright-text">© City of Turku - Varaamo</p>
+                                            <small>It is not possible to reply to this email. Contact information can be found on the Varaamo site. Please contact the resource provider if you have questions regarding your reservation. You can send feedback <a href="<--feedback-->">here</a>.</small>
                                         </th>
                                         <th class="expander"></th>
                                     </tr>
