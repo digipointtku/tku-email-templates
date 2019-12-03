@@ -4,10 +4,10 @@
   "description": "Used to create html email templates for Varaamo.",
   "main": "gulpfile.babel.js",
   "scripts": {
-    "test": "./node_modules/.bin/gulp build:testcontent",
     "build": "./node_modules/.bin/gulp build:all",
     "build:finnish": "./node_modules/.bin/gulp build:finnish",
-    "build:swedish": "./node_modules/.bin/gulp build:swedish"
+    "build:swedish": "./node_modules/.bin/gulp build:swedish",
+    "build:english": "./node_modules/.bin/gulp build:english"
   },
   "author": "",
   "license": "MIT",

@@ -7,7 +7,7 @@ Download or clone this repository and run
 npm install
 ```
 ### Build commands
-To build Finnish and Swedish templates.
+To build all templates(Finnish, Swedish and English).
 ```
 npm run-script build
 ```
@@ -22,4 +22,9 @@ To build the Swedish templates.
 npm run-script build:swedish
 ```
 
-Pages are always compiled to `build/fi` or `build/sv`.
+To build the English templates.
+```
+npm run-script build:english
+```
+
+The minified/inlined pages are compiled to their own language specific folders under `build/`.

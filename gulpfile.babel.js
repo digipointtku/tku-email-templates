@@ -14,7 +14,7 @@ gulp.task('build:swedish', gulp.series(inlineSV, minifySV));
 gulp.task('build:english', gulp.series(inlineEN, minifyEN));
 gulp.task('build:all', gulp.series('build:finnish', 'build:swedish', 'build:english'));
 gulp.task('default', gulp.series('build:finnish', 'build:swedish', 'build:english'));
-gulp.task('build:testcontent',testcontent);
+
 
 /**
  * First replaces placeholder strings(<--feedback/map_url/turku_logo-->) with correct urls for the language,
