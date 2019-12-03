@@ -1,4 +1,4 @@
 node_modules
-build/en
-build/fi
-build/sv
+build/*/*
+
+!build/*/.gitkeep
