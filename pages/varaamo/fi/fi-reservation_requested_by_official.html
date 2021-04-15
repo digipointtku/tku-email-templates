@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Alustava varaus</title>
+    <link rel="stylesheet" href="../../css/foundation-emails.css" />
+    <link rel="stylesheet" href="../../css/turku-custom.css" />
+</head>
+
+<body>
+    <!-- <style> -->
+    <table class="body" data-made-with-foundation>
+        <tr>
+            <td class="float-center" align="center" valign="top">
+                <center>
+                    <table class="container">
+                        <tr>
+                            <td>
+                                <table class="row">
+                                    <tr>
+                                        <th class="bg-black main_logo">
+                                            <img src="<--turku_logo-->" alt="Turun vaakuna" />
+                                        </th>
+                                        <th class="expander"></th>
+                                    </tr>
+                                </table>
+                                <table class="row">
+                                    <tr>
+                                        <th class="large-12 first last columns main_content">
+                                            <p>Hei,</p>
+                                            <p>ja kiitokset Varaamon käytöstä!</p>
+                                            <p>Alustava varaus on tehty puolestasi:</p>
+                                            <hr />
+                                            <p>Palvelu: {{ resource }}</p>
+                                            <p>Toimipiste: {{ unit }}</p>
+                                            <p>Alkaa: {{ begin }}</p>
+                                            <p>Loppuu: {{ end }}</p>
+                                            <p></p>
+                                            {% if reserver_name is defined and reserver_name %}
+                                            <p>Varaajan nimi: {{ reserver_name }}</p>
+                                            {% endif %}
+                                            {% if reserver_email_address is defined and reserver_email_address %}
+                                            <p>Varaajan sähköposti: {{ reserver_email_address }}</p>
+                                            {% endif %}
+                                            {% if reserver_phone_number is defined and reserver_phone_number %}
+                                            <p>Varaajan puhelinnumero: {{ reserver_phone_number }}</p>
+                                            {% endif %}
+                                            {% if home_municipality_id is defined and home_municipality_id %}
+                                            <p>Varaajan kotikunta: {{ home_municipality_id }}</p>
+                                            {% endif %}
+                                            {% if event_subject is defined and event_subject %}
+                                            <p>Varauksen nimi: {{ event_subject }}</p>
+                                            {% endif %}
+                                            {% if event_description is defined and event_description %}
+                                            <p>Varauksen kuvaus: {{ event_description }}</p>
+                                            {% endif %}
+                                            {% if number_of_participants is defined %}
+                                            <p>Osallistujamäärä: {{ number_of_participants }}</p>
+                                            {% endif %}
+                                            <hr />
+                                            {% if extra_content is defined %}
+                                            {{ extra_content }}
+                                            {% endif %}
+                                            <p>Varauksen hyväksymisestä saatte erillisen varausvahvistuksen
+                                                sähköpostitse. Mikäli tarvitsemme lisätietoja varaukseen liittyen,
+                                                olemme teihin yhteydessä erikseen.</p>
+                                            <p>Ystävällisin terveisin, Varaamo</p>
+                                        </th>
+                                        <th class="expander"></th>
+                                    </tr>
+                                </table>
+
+                                <table class="row">
+                                    <tr>
+                                        <th class="large-12 first last columns bg-black footer_container">
+                                            <p class="text-white copyright-text">© Turun Kaupunki -<a
+                                                    href="https://varaamo.turku.fi" target="_blank"
+                                                    rel="noopener noreferrer"> Varaamo</a></p>
+                                            <small>Tähän viestiin ei voi vastata. Löydät yhteystiedot Varaamon
+                                                verkkosivuilta. Varaukseen liittyvissä asioissa voit olla yhteydessä
+                                                tilan tarjoajaan. Palautetta voit lähettää <a
+                                                    href="<--feedback-->">täältä</a>.</small>
+                                        </th>
+                                        <th class="expander"></th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
