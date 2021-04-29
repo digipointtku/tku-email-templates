@@ -132,4 +132,12 @@ export default {
             EN: "http://www.turku.fi/sites/default/files/styles/site_logo/public/sites/all/themes/custom/driveturku/images/sprites/logo.png",
         }
     },
+    LOGO_ALTS: {
+        TURKU: {
+            SRC: "<--turku_logo_alt-->",
+            FI: "Turun vaakuna",
+            SV: "Åbo stadsvapen",
+            EN: "A picture of the coat of arms of the city of Turku."
+        }
+    }
 };
