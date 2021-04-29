@@ -2,174 +2,151 @@ import gulp from 'gulp';
 import inlineCss from 'gulp-inline-css';
 import htmlmin from 'gulp-htmlmin';
 import replace from 'gulp-replace';
+import inject from 'gulp-inject';
+import rename from 'gulp-rename';
 
 import FILES from './variables';
+import path from 'path';
+import fs from 'fs';
 
 /**
  * Gulp tasks.
  * See https://gulpjs.com/
  */
-gulp.task('build:varaamo:finnish', gulp.series(inlineVaraamoFI, minifyVaraamoFI));
-gulp.task('build:varaamo:swedish', gulp.series(inlineVaraamoSV, minifyVaraamoSV));
-gulp.task('build:varaamo:english', gulp.series(inlineVaraamoEN, minifyVaraamoEN));
+gulp.task('build:varaamo:finnish', generateVaraamoFI);
+gulp.task('build:varaamo:swedish', generateVaraamoSV);
+gulp.task('build:varaamo:english', generateVaraamoEN);
 gulp.task('build:varaamo:all', gulp.series('build:varaamo:finnish', 'build:varaamo:swedish', 'build:varaamo:english'));
-gulp.task('build:monitori:finnish', gulp.series(inlineMonitoriFI, minifyMonitoriFI));
-gulp.task('build:monitori:swedish', gulp.series(inlineMonitoriSV, minifyMonitoriSV));
-gulp.task('build:monitori:english', gulp.series(inlineMonitoriEN, minifyMonitoriEN));
+gulp.task('build:monitori:finnish', generateMonitoriFI);
+gulp.task('build:monitori:swedish', generateMonitoriSV);
+gulp.task('build:monitori:english', generateMonitoriEN);
 gulp.task('build:monitori:all', gulp.series('build:monitori:finnish', 'build:monitori:swedish', 'build:monitori:english'));
 gulp.task('default', gulp.series('build:varaamo:all', 'build:monitori:all'));
 
-
 /**
- * First replaces placeholder strings(<--feedback/map_url/turku_logo-->) with correct urls for the language,
- * then inlines all css(from css files in /css subfolder) before moving the final product to correct folder/subfolder depending on language.
- *
- * Info on replace/inlineCss:
- *
- * https://www.npmjs.com/package/gulp-replace
- * https://www.npmjs.com/package/gulp-inline-css
+ * Returns an array with the name.extension of each .html file found at rootPath
+ * @param {string} rootPath
+ * @returns {string[]}
+ * @example
+ * return fileNames = ['fi-reservation_created.html','fi-reservation_denied.html', etc]
  */
-function inlineVaraamoFI() {
-    return gulp.src(FILES.FILE_PATH.VARAAMO.FI.INLINE_PATH)
-    .pipe(replace(FILES.LOGO_URLS.TURKU.SRC,FILES.LOGO_URLS.TURKU.FI))
-    .pipe(replace(FILES.FEEDBACK_URLS.SRC,FILES.FEEDBACK_URLS.FI))
-    .pipe(replace(FILES.MAP_URLS.SERVICE_MAP.SRC, FILES.MAP_URLS.SERVICE_MAP.FI))
-    .pipe(inlineCss({
-        url: 'file://' + __dirname + FILES.FILE_PATH.VARAAMO.FI.ROOT, // specifies the base path for the stylesheet links
-        applyStyleTags: true,
-        applyLinkTags: true,
-        removeStyleTags: true,
-        removeLinkTags: true
-    }))
-    .pipe(gulp.dest(FILES.FILE_PATH.VARAAMO.FI.DEST));
-}
-
-
-
-/**
- * @see inlineFI
- */
-function inlineVaraamoSV() {
-    return gulp.src(FILES.FILE_PATH.VARAAMO.SV.INLINE_PATH)
-    .pipe(replace(FILES.LOGO_URLS.TURKU.SRC, FILES.LOGO_URLS.TURKU.SV))
-    .pipe(replace(FILES.FEEDBACK_URLS.SRC, FILES.FEEDBACK_URLS.SV))
-    .pipe(replace(FILES.MAP_URLS.SERVICE_MAP.SRC, FILES.MAP_URLS.SERVICE_MAP.SV))
-    .pipe(inlineCss({
-        url: 'file://' + __dirname + FILES.FILE_PATH.VARAAMO.SV.ROOT, // specifies the base path for the stylesheet links
-        applyStyleTags: true,
-        applyLinkTags: true,
-        removeStyleTags: true,
-        removeLinkTags: true
-    })).pipe(gulp.dest(FILES.FILE_PATH.VARAAMO.SV.DEST));
+function getFileNames(rootPath) {
+    const fileNames = [];
+    const dirPath = path.join(__dirname, rootPath);
+    fs.readdirSync(dirPath).forEach((file, index) => {
+        if (file.endsWith('.html')) {
+            fileNames.push(file);
+        }
+    });
+    return fileNames;
 }
 
 /**
- * @see inlineFI
+ * Generate Finnish Varaamo templates
  */
-function inlineVaraamoEN(){
-    return gulp.src(FILES.FILE_PATH.VARAAMO.EN.INLINE_PATH)
-    .pipe(replace(FILES.LOGO_URLS.TURKU.SRC, FILES.LOGO_URLS.TURKU.EN))
-    .pipe(replace(FILES.FEEDBACK_URLS.SRC, FILES.FEEDBACK_URLS.EN))
-    .pipe(replace(FILES.MAP_URLS.SERVICE_MAP.SRC, FILES.MAP_URLS.SERVICE_MAP.EN))
-    .pipe(inlineCss({
-        url: 'file://' + __dirname + FILES.FILE_PATH.VARAAMO.EN.ROOT,
-        applyStyleTags: true,
-        applyLinkTags: true,
-        removeStyleTags: true,
-        removeLinkTags: true
-    })).pipe(gulp.dest(FILES.FILE_PATH.VARAAMO.EN.DEST))
-}
-
-function inlineMonitoriFI() {
-    return gulp.src(FILES.FILE_PATH.MONITORI.FI.INLINE_PATH)
-        .pipe(replace(FILES.LOGO_URLS.TURKU.SRC,FILES.LOGO_URLS.TURKU.FI))
-        .pipe(replace(FILES.FEEDBACK_URLS.SRC,FILES.FEEDBACK_URLS.FI))
-        .pipe(replace(FILES.MAP_URLS.SERVICE_MAP.SRC, FILES.MAP_URLS.SERVICE_MAP.FI))
-        .pipe(inlineCss({
-            url: 'file://' + __dirname + FILES.FILE_PATH.MONITORI.FI.ROOT, // specifies the base path for the stylesheet links
-            applyStyleTags: true,
-            applyLinkTags: true,
-            removeStyleTags: true,
-            removeLinkTags: true
-        }))
-        .pipe(gulp.dest(FILES.FILE_PATH.MONITORI.FI.DEST));
-}
-
-function inlineMonitoriSV() {
-    return gulp.src(FILES.FILE_PATH.MONITORI.SV.INLINE_PATH)
-        .pipe(replace(FILES.LOGO_URLS.TURKU.SRC,FILES.LOGO_URLS.TURKU.SV))
-        .pipe(replace(FILES.FEEDBACK_URLS.SRC,FILES.FEEDBACK_URLS.SV))
-        .pipe(replace(FILES.MAP_URLS.SERVICE_MAP.SRC, FILES.MAP_URLS.SERVICE_MAP.SV))
-        .pipe(inlineCss({
-            url: 'file://' + __dirname + FILES.FILE_PATH.MONITORI.SV.ROOT, // specifies the base path for the stylesheet links
-            applyStyleTags: true,
-            applyLinkTags: true,
-            removeStyleTags: true,
-            removeLinkTags: true
-        }))
-        .pipe(gulp.dest(FILES.FILE_PATH.MONITORI.SV.DEST));
-}
-
-function inlineMonitoriEN() {
-    return gulp.src(FILES.FILE_PATH.MONITORI.EN.INLINE_PATH)
-        .pipe(replace(FILES.LOGO_URLS.TURKU.SRC,FILES.LOGO_URLS.TURKU.EN))
-        .pipe(replace(FILES.FEEDBACK_URLS.SRC,FILES.FEEDBACK_URLS.EN))
-        .pipe(replace(FILES.MAP_URLS.SERVICE_MAP.SRC, FILES.MAP_URLS.SERVICE_MAP.EN))
-        .pipe(inlineCss({
-            url: 'file://' + __dirname + FILES.FILE_PATH.MONITORI.EN.ROOT, // specifies the base path for the stylesheet links
-            applyStyleTags: true,
-            applyLinkTags: true,
-            removeStyleTags: true,
-            removeLinkTags: true
-        }))
-        .pipe(gulp.dest(FILES.FILE_PATH.MONITORI.EN.DEST));
-}
-
-
-/**
- * Removes whitespace for the html files in the build folder.
- *
- * info on htmlmin:
- * https://www.npmjs.com/package/gulp-htmlmin
- */
-function minifyVaraamoFI() {
-    return gulp.src(FILES.FILE_PATH.VARAAMO.FI.MINIFY_PATH).pipe(htmlmin({
-        collapseWhitespace: true
-    })).pipe(gulp.dest(FILES.FILE_PATH.VARAAMO.FI.DEST))
+function generateVaraamoFI(cb) {
+    const fileNames = getFileNames(FILES.FILE_PATH.VARAAMO.FI.ROOT);
+    generateTemplates(cb, 'FI', fileNames, 'varaamo');
+    cb();
 }
 
 /**
- * @see minifyFI for information
+ * Generate Swedish Varaamo templates
  */
-function minifyVaraamoSV() {
-    return gulp.src(FILES.FILE_PATH.VARAAMO.SV.MINIFY_PATH).pipe(htmlmin({
-        collapseWhitespace: true
-    })).pipe(gulp.dest(FILES.FILE_PATH.VARAAMO.SV.DEST))
+function generateVaraamoSV(cb) {
+    const fileNames = getFileNames(FILES.FILE_PATH.VARAAMO.SV.ROOT);
+    generateTemplates(cb, 'SV', fileNames, 'varaamo');
+    cb();
 }
 
 /**
- * @see minifyFI
+ * Generate English Varaamo templates
  */
-function minifyVaraamoEN() {
-    return gulp.src(FILES.FILE_PATH.VARAAMO.EN.MINIFY_PATH).pipe(htmlmin({
-        collapseWhitespace: true
-    })).pipe(gulp.dest(FILES.FILE_PATH.VARAAMO.EN.DEST))
+function generateVaraamoEN(cb) {
+    const fileNames = getFileNames(FILES.FILE_PATH.VARAAMO.EN.ROOT);
+    generateTemplates(cb, 'EN', fileNames, 'varaamo');
+    cb();
 }
 
-function minifyMonitoriFI() {
-    return gulp.src(FILES.FILE_PATH.MONITORI.FI.MINIFY_PATH).pipe(htmlmin({
-        collapseWhitespace: true
-    })).pipe(gulp.dest(FILES.FILE_PATH.MONITORI.FI.DEST))
+/**
+ * Generate Finnish Monitori templates
+ */
+function generateMonitoriFI(cb) {
+    const fileNames = getFileNames(FILES.FILE_PATH.MONITORI.FI.ROOT);
+    generateTemplates(cb, 'FI', fileNames, 'monitori');
+    cb();
 }
 
-function minifyMonitoriSV() {
-    return gulp.src(FILES.FILE_PATH.MONITORI.SV.MINIFY_PATH).pipe(htmlmin({
-        collapseWhitespace: true
-    })).pipe(gulp.dest(FILES.FILE_PATH.MONITORI.SV.DEST))
+/**
+ * Generate Swedish Monitori templates
+ */
+function generateMonitoriSV(cb) {
+    const fileNames = getFileNames(FILES.FILE_PATH.MONITORI.SV.ROOT);
+    generateTemplates(cb, 'SV', fileNames, 'monitori');
+    cb();
 }
 
-function minifyMonitoriEN() {
-    return gulp.src(FILES.FILE_PATH.MONITORI.EN.MINIFY_PATH).pipe(htmlmin({
-        collapseWhitespace: true
-    })).pipe(gulp.dest(FILES.FILE_PATH.MONITORI.EN.DEST))
+/**
+ * Generate English Monitori templates
+ */
+function generateMonitoriEN(cb) {
+    const fileNames = getFileNames(FILES.FILE_PATH.MONITORI.EN.ROOT);
+    generateTemplates(cb, 'EN', fileNames, 'monitori');
+    cb();
 }
+
+/**
+ * Generate templates according to parameters
+ * @param cb - callback that lets gulp know when the task is finished.
+ * @param {string} lang - language of the templates, used to construct path to values/files.
+ * @param {string[]} files - array with the names of the files that were found, final templates will be named according to these.
+ * @param {string} service - name of the service/site, used to construct path to files ie. /pages/service/foo.
+ */
+function generateTemplates(cb, lang = 'FI', files = [], service = 'varaamo') {
+    const {LOGO_URLS, LOGO_ALTS, FEEDBACK_URLS, MAP_URLS, FILE_PATH} = FILES;
+
+    files.forEach((fileName) => {
+        const lowerCaseLang = lang.toLowerCase();
+        const upperCaseService = service.toUpperCase();
+        // found in pages/template/footer/
+        const footerName = `${lowerCaseLang}-varaamo.html`;
+        return gulp.src('./pages/template/index.html')
+            .pipe(inject(gulp.src(`./pages/${service}/${lowerCaseLang}/${fileName}`), { // inject primary html content into index.html
+                starttag:  '<!-- inject:main:html -->',
+                transform: function (filePath, file) {
+                    return file.contents.toString('utf8')
+                },
+                removeTags: true,
+                quiet: true,
+            }))
+            .pipe(replace(LOGO_URLS.TURKU.SRC,LOGO_URLS.TURKU[lang])) // replace logo url placeholder
+            .pipe(replace(LOGO_ALTS.TURKU.SRC,LOGO_ALTS.TURKU[lang])) // replace logo alt text placeholder
+            .pipe(inject(gulp.src(`./pages/template/footer/${footerName}`), { // inject footer html content into index.html
+                starttag:  '<!-- inject:footer:html -->',
+                transform: function (filePath, file) {
+                    return file.contents.toString('utf8')
+                },
+                removeTags: true,
+                quiet: true,
+            }))
+            .pipe(replace(FEEDBACK_URLS.SRC,FEEDBACK_URLS[lang])) // replace feedback url placeholder
+            .pipe(replace(MAP_URLS.SERVICE_MAP.SRC, MAP_URLS.SERVICE_MAP[lang])) // replace map url placeholder
+            .pipe(inlineCss({
+                url: 'file://' + __dirname + '/pages/template/', // specifies the base path for the stylesheet links
+                applyStyleTags: true,
+                applyLinkTags: true,
+                removeStyleTags: true,
+                removeLinkTags: true
+            }))
+            .pipe(htmlmin({ // minify html
+                collapseWhitespace: true
+            }))
+            .pipe(rename(fileName)) // rename index.html according to fileName
+            .pipe(gulp.dest(FILE_PATH[upperCaseService][lang].DEST)) // write to destination
+    })
+    cb();
+}
+
+
+
+

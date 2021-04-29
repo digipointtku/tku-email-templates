@@ -1,85 +1,29 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Title</title>
-    <link rel="stylesheet" href="../../css/foundation-emails.css" />
-    <link rel="stylesheet" href="../../css/turku-custom.css" />
-</head>
-
-<body>
-    <!-- <style> -->
-    <table class="body" data-made-with-foundation>
-        <tr>
-            <td class="float-center" align="center" valign="top">
-                <center>
-                    <table class="container">
-                        <tr>
-                            <td>
-                                <table class="row">
-                                    <tr>
-                                        <th class="bg-black main_logo">
-                                            <img src="<--turku_logo-->"
-                                                alt="Åbo stadsvapen" />
-                                        </th>
-                                        <th class="expander"></th>
-                                    </tr>
-                                </table>
-                                <table class="row">
-                                    <tr>
-                                        <th class="large-12 first last columns main_content">
-                                            <p>Hej,</p>
-                                            <p>Du har gjort ändringar i din bokning.</p>
-                                            <p>Här är bokningens uppdaterade information:</p>
-                                            <hr />
-                                            <p>Utrymme: {{ resource }}</p>
-                                            <p>Plats: {{ unit }}</p>
-                                            <p>Börjar: {{ begin }}</p>
-                                            <p>Slutar: {{ end }}</p>
-                                            <p></p>
-                                            <p>Bokarens namn: {{ reserver_name }}</p>
-                                            <p>Bokarens e-post: {{ reserver_email_address }}</p>
-                                            {% if reserver_phone_number is defined and reserver_phone_number %}
-                                            <p>Bokarens telefonnummer: {{ reserver_phone_number }}</p>
-                                            {% endif %}
-                                            {% if event_subject is defined and event_subject %}
-                                                <p>Bokningens namn: {{ event_subject }}</p>
-                                            {% endif %}
-                                            {% if event_description is defined and event_description %}
-                                                <p>Bokningens beskrivning: {{ event_description }}</p>
-                                            {% endif %}
-                                            {% if number_of_participants is defined %}
-                                                <p>Antal deltagare: {{ number_of_participants }}</p>
-                                            {% endif %}
-                                            {% if unit is defined %}
-                                            {% set linkUrl = '<--map_url-->' + unit_map_service_id|string + '#!route-details' %}
-                                                <a href="{{ linkUrl }}">Visa på servicekartan</a>
-                                            {% endif %}
-                                            <p>När du kommer till Kauppatorin Monitori skall du anmäla dig vid stadens könummerautomat med det telefonnummer som du gav i bokningen.</p>
-                                            <p>Med vänliga hälsningar, Varaamo</p>
-                                        </th>
-                                        <th class="expander"></th>
-                                    </tr>
-                                </table>
-
-                                <table class="row">
-                                    <tr>
-                                        <th class="large-12 first last columns bg-black footer_container">
-                                            <p class="text-white copyright-text">© Åbo Stad -<a href="https://varaamo.turku.fi" target="_blank" rel="noopener noreferrer"> Varaamo</a></p>
-                                            <small>Du kan inte svara på detta meddelande. Kontaktuppgifter finns på Varaamos webbsidor. I ärenden som gäller bokningar kan du kontakta den som tillhandahåller utrymmena. Du kan skicka feedback <a href="<--feedback-->">här</a>.</small>
-                                        </th>
-                                        <th class="expander"></th>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </center>
-            </td>
-        </tr>
-    </table>
-</body>
-
-</html>
+<p>Hej,</p>
+<p>Du har gjort ändringar i din bokning.</p>
+<p>Här är bokningens uppdaterade information:</p>
+<hr />
+<p>Utrymme: {{ resource }}</p>
+<p>Plats: {{ unit }}</p>
+<p>Börjar: {{ begin }}</p>
+<p>Slutar: {{ end }}</p>
+<p></p>
+<p>Bokarens namn: {{ reserver_name }}</p>
+<p>Bokarens e-post: {{ reserver_email_address }}</p>
+{% if reserver_phone_number is defined and reserver_phone_number %}
+<p>Bokarens telefonnummer: {{ reserver_phone_number }}</p>
+{% endif %}
+{% if event_subject is defined and event_subject %}
+    <p>Bokningens namn: {{ event_subject }}</p>
+{% endif %}
+{% if event_description is defined and event_description %}
+    <p>Bokningens beskrivning: {{ event_description }}</p>
+{% endif %}
+{% if number_of_participants is defined %}
+    <p>Antal deltagare: {{ number_of_participants }}</p>
+{% endif %}
+{% if unit is defined %}
+{% set linkUrl = '<--map_url-->' + unit_map_service_id|string + '#!route-details' %}
+    <a href="{{ linkUrl }}">Visa på servicekartan</a>
+{% endif %}
+<p>När du kommer till Salutorgets Monitori skall du anmäla dig vid stadens könummerautomat med det telefonnummer som du gav i bokningen.</p>
+<p>Med vänliga hälsningar, Varaamo</p>

@@ -1,76 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Varaus vahvistettu</title>
-    <link rel="stylesheet" href="../../css/foundation-emails.css" />
-    <link rel="stylesheet" href="../../css/turku-custom.css" />
-</head>
-
-<body>
-    <!-- <style> -->
-    <table class="body" data-made-with-foundation>
-        <tr>
-            <td class="float-center" align="center" valign="top">
-                <center>
-                    <table class="container">
-                        <tr>
-                            <td>
-                                <table class="row">
-                                    <tr>
-                                        <th class="bg-black main_logo">
-                                            <img src="<--turku_logo-->" alt="Turun vaakuna" />
-                                        </th>
-                                        <th class="expander"></th>
-                                    </tr>
-                                </table>
-                                <table class="row">
-                                    <tr>
-                                        <th class="large-12 first last columns main_content">
-                                            <p>Hei,</p>
-                                            <p>Varauksesi on hyväksytty.</p>
-                                            <hr />
-                                            <p>Palvelu: {{ resource }}</p>
-                                            <p>Toimipiste: {{ unit }}</p>
-                                            <p>Alkaa: {{ begin }}</p>
-                                            <p>Loppuu: {{ end }}</p>
-                                            <p></p>
-                                            <hr />
-                                            {% if extra_content is defined %}
-                                            {{ extra_content }}
-                                            {% endif %}
-                                            <p>Varauksen peruminen tehdään tilasta vastaavan henkilökunnan kautta.
-                                                Tarkemmat tiedot perumiseen löydätte Varaamon omista varauksista
-                                                kirjautumalla palveluun.</p>
-                                            <p>Ystävällisin terveisin, Varaamo</p>
-                                        </th>
-                                        <th class="expander"></th>
-                                    </tr>
-                                </table>
-
-                                <table class="row">
-                                    <tr>
-                                        <th class="large-12 first last columns bg-black footer_container">
-                                            <p class="text-white copyright-text">© Turun Kaupunki -<a
-                                                    href="https://varaamo.turku.fi" target="_blank"
-                                                    rel="noopener noreferrer"> Varaamo</a></p>
-                                            <small>Tähän viestiin ei voi vastata. Löydät yhteystiedot Varaamon
-                                                verkkosivuilta. Varaukseen liittyvissä asioissa voit olla yhteydessä
-                                                tilan tarjoajaan. Palautetta voit lähettää <a
-                                                    href="<--feedback-->">täältä</a>.</small>
-                                        </th>
-                                        <th class="expander"></th>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </center>
-            </td>
-        </tr>
-    </table>
-</body>
-
-</html>
+<p>Hei,</p>
+<p>Varauksesi on hyväksytty.</p>
+<hr />
+<p>Palvelu: {{ resource }}</p>
+<p>Toimipiste: {{ unit }}</p>
+<p>Alkaa: {{ begin }}</p>
+<p>Loppuu: {{ end }}</p>
+<p></p>
+<hr />
+{% if extra_content is defined %}
+{{ extra_content }}
+{% endif %}
+<p>Varauksen peruminen tehdään tilasta vastaavan henkilökunnan kautta.
+    Tarkemmat tiedot perumiseen löydätte Varaamon omista varauksista
+    kirjautumalla palveluun.</p>
+<p>Ystävällisin terveisin, Varaamo</p>

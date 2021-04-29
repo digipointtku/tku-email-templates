@@ -5,10 +5,6 @@
  * Example shows FI object for varaamo
  * @example
  * FI: {
- *     // path that is used when inlining and replacing
- *     INLINE_PATH: './pages/varaamo/fi/*.html',
- *     // path that is used when the html files are minified
- *     MINIFY_PATH: 'build/varaamo/fi/*.html',
  *     // path to final product
  *     DEST: 'build/varaamo/fi/',
  *     // base path
@@ -57,22 +53,16 @@ export default {
         VARAAMO: {
             /** @type {LanguageSpecificObject} **/
             FI: {
-                INLINE_PATH: './pages/varaamo/fi/*.html',
-                MINIFY_PATH: 'build/varaamo/fi/*.html',
                 DEST: 'build/varaamo/fi/',
                 ROOT: '/pages/varaamo/fi/',
             },
             /** @type {LanguageSpecificObject} **/
             SV: {
-                INLINE_PATH: './pages/varaamo/sv/*.html',
-                MINIFY_PATH: 'build/varaamo/sv/*.html',
                 DEST: 'build/varaamo/sv/',
                 ROOT: '/pages/varaamo/sv/'
             },
             /** @type {LanguageSpecificObject} **/
             EN: {
-                INLINE_PATH: './pages/varaamo/en/*.html',
-                MINIFY_PATH: 'build/varaamo/en/*.html',
                 DEST: 'build/varaamo/en/',
                 ROOT: '/pages/varaamo/en/'
             },
@@ -82,22 +72,16 @@ export default {
         MONITORI: {
             /** @type {LanguageSpecificObject} **/
             FI: {
-                INLINE_PATH: './pages/monitori/fi/*.html',
-                MINIFY_PATH: 'build/monitori/fi/*.html',
                 DEST: 'build/monitori/fi/',
                 ROOT: '/pages/monitori/fi/'
             },
             /** @type {LanguageSpecificObject} **/
             SV: {
-                INLINE_PATH: './pages/monitori/sv/*.html',
-                MINIFY_PATH: 'build/monitori/sv/*.html',
                 DEST: 'build/monitori/sv/',
                 ROOT: '/pages/monitori/sv/',
             },
             /** @type {LanguageSpecificObject} **/
             EN: {
-                INLINE_PATH: './pages/monitori/en/*.html',
-                MINIFY_PATH: 'build/monitori/en/*.html',
                 DEST: 'build/monitori/en/',
                 ROOT: '/pages/monitori/en/',
             }
@@ -132,4 +116,12 @@ export default {
             EN: "http://www.turku.fi/sites/default/files/styles/site_logo/public/sites/all/themes/custom/driveturku/images/sprites/logo.png",
         }
     },
+    LOGO_ALTS: {
+        TURKU: {
+            SRC: "<--turku_logo_alt-->",
+            FI: "Turun vaakuna",
+            SV: "Åbo stadsvapen",
+            EN: "A picture of the coat of arms of the city of Turku."
+        }
+    }
 };
