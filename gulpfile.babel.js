@@ -45,13 +45,7 @@ function getFileNames(rootPath) {
  * Generate Finnish Varaamo templates
  */
 function generateVaraamoFI(cb) {
-    const fileNames = [];
-    const dirPath = path.join(__dirname, FILES.FILE_PATH.VARAAMO.FI.ROOT);
-    fs.readdirSync(dirPath).forEach((file, index) => {
-
-        fileNames.push(file);
-    });
-    console.log(fileNames);
+    const fileNames = getFileNames(FILES.FILE_PATH.VARAAMO.FI.ROOT);
     generateTemplates(cb, 'FI', fileNames, 'varaamo');
     cb();
 }
@@ -60,12 +54,7 @@ function generateVaraamoFI(cb) {
  * Generate Swedish Varaamo templates
  */
 function generateVaraamoSV(cb) {
-    const fileNames = [];
-    const dirPath = path.join(__dirname, FILES.FILE_PATH.VARAAMO.SV.ROOT);
-    fs.readdirSync(dirPath).forEach((file, index) => {
-        fileNames.push(file);
-    });
-    console.log(fileNames);
+    const fileNames = getFileNames(FILES.FILE_PATH.VARAAMO.SV.ROOT);
     generateTemplates(cb, 'SV', fileNames, 'varaamo');
     cb();
 }
@@ -74,9 +63,7 @@ function generateVaraamoSV(cb) {
  * Generate English Varaamo templates
  */
 function generateVaraamoEN(cb) {
-
     const fileNames = getFileNames(FILES.FILE_PATH.VARAAMO.EN.ROOT);
-    console.log(fileNames);
     generateTemplates(cb, 'EN', fileNames, 'varaamo');
     cb();
 }
@@ -85,9 +72,7 @@ function generateVaraamoEN(cb) {
  * Generate Finnish Monitori templates
  */
 function generateMonitoriFI(cb) {
-
     const fileNames = getFileNames(FILES.FILE_PATH.MONITORI.FI.ROOT);
-    console.log(fileNames);
     generateTemplates(cb, 'FI', fileNames, 'monitori');
     cb();
 }
@@ -96,9 +81,7 @@ function generateMonitoriFI(cb) {
  * Generate Swedish Monitori templates
  */
 function generateMonitoriSV(cb) {
-
     const fileNames = getFileNames(FILES.FILE_PATH.MONITORI.SV.ROOT);
-    console.log(fileNames);
     generateTemplates(cb, 'SV', fileNames, 'monitori');
     cb();
 }
@@ -107,12 +90,7 @@ function generateMonitoriSV(cb) {
  * Generate English Monitori templates
  */
 function generateMonitoriEN(cb) {
-    /**
-     * String array consisting of filename.extension of files found
-     * @type {string[]}
-     */
     const fileNames = getFileNames(FILES.FILE_PATH.MONITORI.EN.ROOT);
-    console.log(fileNames);
     generateTemplates(cb, 'EN', fileNames, 'monitori');
     cb();
 }

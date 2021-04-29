@@ -9,6 +9,14 @@
 <p></p>
 <p>Reserver name: {{ reserver_name }}</p>
 <p>Reserver email: {{ reserver_email_address }}</p>
+{% if reserver_phone_number is defined and reserver_phone_number %}
+<p>Reserver phone number: {{ reserver_phone_number }}</p>
+{% else %}
+<p>Reserver phone number: --</p>
+{% endif %}
+{% if home_municipality_id is defined and home_municipality_id %}
+<p>Reserver home municipality : {{ home_municipality_id }}</p>
+{% endif %}
 {% if event_subject is defined and event_subject %}
     <p>Name of reservation: {{ event_subject }}</p>
 {% endif %}
