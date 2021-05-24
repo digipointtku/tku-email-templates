@@ -104,12 +104,15 @@ function generateMonitoriEN(cb) {
  */
 function generateTemplates(cb, lang = 'FI', files = [], service = 'varaamo') {
     const {LOGO_URLS, LOGO_ALTS, FEEDBACK_URLS, MAP_URLS, FILE_PATH} = FILES;
+    const {PAYMENT} = FILE_PATH.VARAAMO;
 
     files.forEach((fileName) => {
         const lowerCaseLang = lang.toLowerCase();
         const upperCaseService = service.toUpperCase();
         // found in pages/template/footer/
         const footerName = `${lowerCaseLang}-varaamo.html`;
+        // found in pages/varaamo/payment
+        const paymentDetails = `${lowerCaseLang}-payment_details.html`;
         return gulp.src('./pages/template/index.html')
             .pipe(inject(gulp.src(`./pages/${service}/${lowerCaseLang}/${fileName}`), { // inject primary html content into index.html
                 starttag:  '<!-- inject:main:html -->',
@@ -130,6 +133,14 @@ function generateTemplates(cb, lang = 'FI', files = [], service = 'varaamo') {
                 quiet: true,
             }))
             .pipe(replace(FEEDBACK_URLS.SRC,FEEDBACK_URLS[lang])) // replace feedback url placeholder
+            .pipe(inject(gulp.src(`${PAYMENT.ROOT}${paymentDetails}`), { // inject order/payment details html
+                starttag:  '<!-- inject:order:html -->',
+                transform: function (filePath, file) {
+                    return file.contents.toString('utf8')
+                },
+                removeTags: true,
+                quiet: true,
+            }))
             .pipe(replace(MAP_URLS.SERVICE_MAP.SRC, MAP_URLS.SERVICE_MAP[lang])) // replace map url placeholder
             .pipe(inlineCss({
                 url: 'file://' + __dirname + '/pages/template/', // specifies the base path for the stylesheet links
