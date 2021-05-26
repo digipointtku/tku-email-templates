@@ -14,12 +14,13 @@
 
 /**
  * @typedef ServiceSpecificObject
- * Contains language specific objects
+ * Contains language specific objects + additional keys
  * @see {@link LanguageSpecificObject} example of a language specific object
  * @example
  * FI:{},
  * SV:{},
  * EN:{}
+ * PAYMENT:{}
  */
 
 /**
@@ -66,6 +67,9 @@ export default {
                 DEST: 'build/varaamo/en/',
                 ROOT: '/pages/varaamo/en/'
             },
+            PAYMENT: {
+                ROOT: './pages/varaamo/payment/',
+            }
         },
 
         /** @see {@link ServiceSpecificObject} **/

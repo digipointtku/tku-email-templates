@@ -1,0 +1,117 @@
+<div style="padding: 0 0 0 0">
+    <table>
+        <thead>
+        <tr>
+            <th style="font-weight: bold; width: 50%">Maksajan tiedot</th>
+            <th style="font-weight: bold;width: 50%">Tapahtuman päivämäärä</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <div>
+                    <p style="margin-bottom: 0">{{ billing_first_name }} {{ billing_last_name }}</p>
+                    <p style="margin-bottom: 0">{{ billing_address_street }}</p>
+                    <p style="margin-bottom: 0">{{ billing_address_zip }} {{ billing_address_city }}</p>
+                </div>
+            </td>
+            <td>
+                {{ order_details[0].created_at }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div style="padding-top: 20px;">
+    <table>
+        <tr>
+            <td style="width: 50%">
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="font-weight: bold">Laskun tunniste</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ order_details[0].order_number }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="font-weight: bold;padding-top: 10px">Tapahtuman tunniste</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ order_details[0].id }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="width: 50%">
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="font-weight: bold">Myyjän tiedot</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div>
+                                <p style="margin-bottom: 0">Turun Kaupunki</p>
+                                <p style="margin-bottom: 0">PL 355</p>
+                                <p style="margin-bottom: 0">20101 TURKU</p>
+                                <p style="margin-bottom: 0">Y-tunnus 0204819-8</p>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div style="padding: 20px 0">
+    <table>
+        <thead>
+        <tr style="border: 1px solid">
+            <th style="padding:5px">Kuvaus</th>
+            <th style="padding:5px">Yksikköhinta</th>
+            <th style="padding:5px">Määrä</th>
+            <th style="padding:5px;text-align: center">Summa</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for value in order_details %}
+
+        <tr>
+            <td style="padding:5px">{{ value.reservation_name }}, {{ unit }}</td>
+            {% if value.price_type == 'fixed' %}
+            <td style="text-align: left;padding:5px">{{ value.price }}€</td>
+            {% else %}
+            <td style="text-align: left;padding:5px">{{ value.price }}€ / {{ value.decimal_hours}} tuntia</td>
+            {% endif %}
+            <td style="text-align: left;padding:5px">{{ value.quantity }}</td>
+            <td style="text-align: right;padding:5px 35px 5px 5px">{{ value.unit_price }}€</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<table>
+    <tbody>
+    <tr>
+        <td style="text-align: right;padding:5px;font-weight: bold">Yhteensä</td>
+        <td style="padding:5px 35px 5px 5px; text-align: right">{{ order_details|sum(attribute='unit_price_num') }}€</td>
+    </tr>
+    <tr>
+        <td style="text-align: right;padding:5px;font-weight: bold">Maksu(sis. alv. {{ order_details[0].tax_percentage }}%)</td>
+        <td style="padding:5px 35px 5px 5px;text-align: right; width: 100px">{{ order_details|sum(attribute='unit_price_num') }}€</td>
+    </tr>
+    </tbody>
+</table>
