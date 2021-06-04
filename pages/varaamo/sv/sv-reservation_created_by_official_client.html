@@ -22,7 +22,7 @@
     <p>Antal deltagare: {{ number_of_participants }}</p>
 {% endif %}
 {% if unit is defined %}
-{% set linkUrl = '<--map_url-->' + unit_map_service_id|string + '#!route-details' %}
+{% set linkUrl = '<--map_url-->' + unit_map_service_id|string + '#' %}
     <a href="{{ linkUrl }}">Visa på servicekartan</a>
 {% endif %}
 <p>Med vänliga hälsningar, Varaamo</p>

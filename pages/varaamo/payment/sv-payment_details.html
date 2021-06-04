@@ -80,10 +80,11 @@
     <table>
         <thead>
         <tr style="border: 1px solid">
-            <th style="padding:5px">Beskrivning</th>
-            <th style="padding:5px">Enhetspris</th>
+            <th style="padding:5px">Produkt/service</th>
             <th style="padding:5px">Mängd</th>
-            <th style="padding:5px;text-align: center">Summa</th>
+            <th style="padding:5px">Skattefritt pris</th>
+            <th style="padding:5px">Moms %</th>
+            <th style="padding:5px;text-align: center">Totala skattefria</th>
         </tr>
         </thead>
         <tbody>
@@ -91,13 +92,10 @@
 
         <tr>
             <td style="padding:5px">{{ value.reservation_name }}, {{ unit }}</td>
-            {% if value.price_type == 'fixed' %}
-            <td style="text-align: left;padding:5px">{{ value.price }}€</td>
-            {% else %}
-            <td style="text-align: left;padding:5px">{{ value.price }}€ / {{ value.decimal_hours}} timmar</td>
-            {% endif %}
             <td style="text-align: left;padding:5px">{{ value.quantity }}</td>
-            <td style="text-align: right;padding:5px 35px 5px 5px">{{ value.unit_price }}€</td>
+            <td style="text-align: left;padding:5px">{{ value.pretax_price }}</td>
+            <td style="text-align: left;padding:5px">{{ value.tax_percentage }}</td>
+            <td style="text-align: right;padding:5px 35px 5px 5px">{{ value.pretax_price }}</td>
         </tr>
         {% endfor %}
         </tbody>
@@ -106,12 +104,16 @@
 <table>
     <tbody>
     <tr>
-        <td style="text-align: right;padding:5px;font-weight: bold">Totalsumma</td>
-        <td style="padding:5px 35px 5px 5px; text-align: right">{{ order_details|sum(attribute='unit_price_num') }}€</td>
+        <td style="text-align: right;padding:5px;font-weight: bold">Totala skattefria priset</td>
+        <td style="padding:5px 35px 5px 5px; text-align: right">{{ "%.2f"|format((order_details|sum(attribute='pretax_price_num') * order_details[0].quantity)|round(2))  }}€</td>
     </tr>
     <tr>
-        <td style="text-align: right;padding:5px;font-weight: bold">Slutsumma(inkl. moms {{ order_details[0].tax_percentage }}%)</td>
-        <td style="padding:5px 35px 5px 5px;text-align: right; width: 100px">{{ order_details|sum(attribute='unit_price_num') }}€</td>
+        <td style="text-align: right;padding:5px;font-weight: bold">Moms {{ order_details[0].tax_percentage }} totalt</td>
+        <td style="padding:5px 35px 5px 5px; text-align: right">{{ "%.2f"|format( (order_details|sum(attribute='tax_price_num') * order_details[0].quantity)|round(2)) }}€</td>
+    </tr>
+    <tr>
+        <td style="text-align: right;padding:5px;font-weight: bold">Totala priset</td>
+        <td style="padding:5px 35px 5px 5px;text-align: right; width: 100px">{{ "%.2f"|format(order_details|sum(attribute='unit_price_num')) }}€</td>
     </tr>
     </tbody>
 </table>
