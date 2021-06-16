@@ -1,18 +1,18 @@
-<div style="padding: 0 0 0 0">
+<div class="billing-details">
     <table>
         <thead>
         <tr>
-            <th style="font-weight: bold; width: 50%">Purchaser's details</th>
-            <th style="font-weight: bold;width: 50%">Date of issue</th>
+            <th class="billing-details-headers">Purchaser's details</th>
+            <th class="billing-details-headers">Date of issue</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td>
                 <div>
-                    <p style="margin-bottom: 0">{{ billing_first_name }} {{ billing_last_name }}</p>
-                    <p style="margin-bottom: 0">{{ billing_address_street }}</p>
-                    <p style="margin-bottom: 0">{{ billing_address_zip }} {{ billing_address_city }}</p>
+                    <p class="billing-details-values">{{ billing_first_name }} {{ billing_last_name }}</p>
+                    <p class="billing-details-values">{{ billing_address_street }}</p>
+                    <p class="billing-details-values">{{ billing_address_zip }} {{ billing_address_city }}</p>
                 </div>
             </td>
             <td>
@@ -22,14 +22,14 @@
         </tbody>
     </table>
 </div>
-<div style="padding-top: 20px;">
+<div class="payment-details">
     <table>
         <tr>
-            <td style="width: 50%">
+            <td class="payment-details-ids">
                 <table>
                     <thead>
                     <tr>
-                        <th style="font-weight: bold">Order number</th>
+                        <th class="payment-details-bill-id">Order number</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -41,7 +41,7 @@
                 <table>
                     <thead>
                     <tr>
-                        <th style="font-weight: bold;padding-top: 10px">Transaction number</th>
+                        <th class="payment-details-event-id">Transaction number</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,21 +51,21 @@
                     </tbody>
                 </table>
             </td>
-            <td style="width: 50%">
+            <td class="payment-details-seller">
                 <table>
                     <thead>
                     <tr>
-                        <th style="font-weight: bold">Seller's details</th>
+                        <th class="payment-details-seller-header">Seller's details</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td>
                             <div>
-                                <p style="margin-bottom: 0">City of Turku</p>
-                                <p style="margin-bottom: 0">PO 355</p>
-                                <p style="margin-bottom: 0">20101 TURKU</p>
-                                <p style="margin-bottom: 0">Business ID 0204819-8</p>
+                                <p class="payment-details-seller-values">City of Turku</p>
+                                <p class="payment-details-seller-values">PO 355</p>
+                                <p class="payment-details-seller-values">20101 TURKU</p>
+                                <p class="payment-details-seller-values">Business ID 0204819-8</p>
                             </div>
                         </td>
                     </tr>
@@ -76,26 +76,26 @@
     </table>
 </div>
 
-<div style="padding: 20px 0">
+<div class="order-details">
     <table>
         <thead>
-        <tr style="border: 1px solid">
-            <th style="padding:5px">Product/service</th>
-            <th style="padding:5px">Quantity</th>
-            <th style="padding:5px">Tax-free price</th>
-            <th style="padding:5px">VAT %</th>
-            <th style="padding:5px;text-align: center">Total tax-free price</th>
+        <tr class="order-details-headers-tr">
+            <th class="order-details-headers">Product/service</th>
+            <th class="order-details-headers">Quantity</th>
+            <th class="order-details-headers">Unit price</th>
+            <th class="order-details-headers">VAT %</th>
+            <th class="order-details-headers-last-value">Total tax-free price</th>
         </tr>
         </thead>
         <tbody>
         {% for value in order_details %}
 
         <tr>
-            <td style="padding:5px">{{ value.reservation_name }}, {{ unit }}</td>
-            <td style="text-align: left;padding:5px">{{ value.quantity }}</td>
-            <td style="text-align: left;padding:5px">{{ value.pretax_price }}</td>
-            <td style="text-align: left;padding:5px">{{ value.tax_percentage }}</td>
-            <td style="text-align: right;padding:5px 35px 5px 5px">{{ value.pretax_price }}</td>
+            <td class="order-details-values-first">{{ value.reservation_name }}, {{ unit }}</td>
+            <td class="order-details-values-middle">{{ value.quantity }}</td>
+            <td class="order-details-values-middle">{{ value.pretax_price }}</td>
+            <td class="order-details-values-middle">{{ value.tax_percentage }}</td>
+            <td class="order-details-values-last-value">{{ value.pretax_price }}</td>
         </tr>
         {% endfor %}
         </tbody>
@@ -104,16 +104,16 @@
 <table>
     <tbody>
     <tr>
-        <td style="text-align: right;padding:5px;font-weight: bold">Tax-free price total</td>
-        <td style="padding:5px 35px 5px 5px; text-align: right">{{ "%.2f"|format((order_details|sum(attribute='pretax_price_num') * order_details[0].quantity)|round(2))  }}€</td>
+        <td class="order-summary-headers">Tax-free price total</td>
+        <td class="order-summary-values">{{ "%.2f"|format((order_details|sum(attribute='pretax_price_num') * order_details[0].quantity)|round(2))  }}€</td>
     </tr>
     <tr>
-        <td style="text-align: right;padding:5px;font-weight: bold">VAT {{ order_details[0].tax_percentage }} total</td>
-        <td style="padding:5px 35px 5px 5px; text-align: right">{{ "%.2f"|format( (order_details|sum(attribute='tax_price_num') * order_details[0].quantity)|round(2)) }}€</td>
+        <td class="order-summary-headers">VAT {{ order_details[0].tax_percentage }} % total</td>
+        <td class="order-summary-values">{{ "%.2f"|format( (order_details|sum(attribute='tax_price_num') * order_details[0].quantity)|round(2)) }}€</td>
     </tr>
     <tr>
-        <td style="text-align: right;padding:5px;font-weight: bold">Total</td>
-        <td style="padding:5px 35px 5px 5px;text-align: right; width: 100px">{{ "%.2f"|format(order_details|sum(attribute='unit_price_num')) }}€</td>
+        <td class="order-summary-headers">Total</td>
+        <td class="order-summary-values-last-value">{{ "%.2f"|format(order_details|sum(attribute='unit_price_num')) }}€</td>
     </tr>
     </tbody>
 </table>
