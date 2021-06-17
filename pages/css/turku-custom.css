@@ -37,3 +37,78 @@
 .copyright-text {
     margin: 0;
 }
+
+.billing-details {
+    padding: 0 0 0 0;
+
+}
+.billing-details-headers {
+    font-weight: bold;
+    width: 50%;
+}
+
+.billing-details-values,
+.payment-details-seller-values {
+    margin-bottom: 0;
+}
+
+.payment-details {
+    padding-top: 20px;
+}
+.payment-details-ids,
+.payment-details-seller {
+    width: 50%;
+}
+
+.payment-details-bill-id,
+.payment-details-seller-header{
+    font-weight: bold;
+}
+
+.payment-details-event-id {
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.order-details {
+    padding: 20px 0;
+}
+
+.order-details-headers-tr {
+    border: 1px solid #000000;
+}
+.order-details-headers {
+    padding: 5px;
+}
+
+.order-details-headers-last-value {
+    padding: 5px;
+    text-align: center;
+}
+
+.order-details-values-first {
+    padding: 5px;
+}
+.order-details-values-middle {
+    text-align: left;
+    padding: 5px;
+}
+.order-details-values-last-value {
+    text-align: right;
+    padding: 5px 35px 5px 5px;
+}
+
+.order-summary-headers {
+    text-align: right;
+    padding: 5px;
+    font-weight: bold;
+}
+.order-summary-values {
+    text-align: right;
+    padding: 5px 35px 5px 5px;
+}
+.order-summary-values-last-value {
+    text-align: right;
+    padding: 5px 35px 5px 5px;
+    width: 100px;
+}
