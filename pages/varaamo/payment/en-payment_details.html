@@ -4,6 +4,7 @@
         <tr>
             <th class="billing-details-headers">Purchaser's details</th>
             <th class="billing-details-headers">Transaction date</th>
+
         </tr>
         </thead>
         <tbody>
@@ -110,7 +111,6 @@
         <td class="order-summary-values">{{ taxfree_final|replace('.', ',') }} euro</td>
     </tr>
     <tr>
-
         <td class="order-summary-headers">VAT {{ order_details[0].tax_percentage }} % total</td>
         {% set tax_string = "%.2f"|format( (order_details|sum(attribute='tax_price_num') * order_details[0].quantity)|round(2)) %}
         {% set tax_final = tax_string|string %}
@@ -121,6 +121,7 @@
         {% set total_string = "%.2f"|format(order_details|sum(attribute='unit_price_num')) %}
         {% set total_final = total_string|string %}
         <td class="order-summary-values-last-value">{{ total_final|replace('.', ',') }} euro</td>
+
     </tr>
     </tbody>
 </table>

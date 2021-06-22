@@ -4,6 +4,7 @@
         <tr>
             <th class="billing-details-headers">Maksajan tiedot</th>
             <th class="billing-details-headers">Maksutapahtuman päivämäärä</th>
+
         </tr>
         </thead>
         <tbody>
@@ -120,6 +121,7 @@
         {% set total_string = "%.2f"|format(order_details|sum(attribute='unit_price_num')) %}
         {% set total_final = total_string|string %}
         <td class="order-summary-values-last-value">{{ total_final|replace('.', ',') }} euroa</td>
+
     </tr>
     </tbody>
 </table>

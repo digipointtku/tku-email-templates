@@ -121,6 +121,7 @@
         {% set total_string = "%.2f"|format(order_details|sum(attribute='unit_price_num')) %}
         {% set total_final = total_string|string %}
         <td class="order-summary-values-last-value">{{ total_final|replace('.', ',') }} euro</td>
+
     </tr>
     </tbody>
 </table>
