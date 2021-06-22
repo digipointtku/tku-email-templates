@@ -105,15 +105,22 @@
     <tbody>
     <tr>
         <td class="order-summary-headers">Totala skattefria priset</td>
-        <td class="order-summary-values">{{ "%.2f"|format((order_details|sum(attribute='pretax_price_num') * order_details[0].quantity)|round(2))  }}€</td>
+        {% set taxfree_string = "%.2f"|format((order_details|sum(attribute='pretax_price_num') * order_details[0].quantity)|round(2)) %}
+        {% set taxfree_final = taxfree_string|string %}
+        <td class="order-summary-values">{{ taxfree_final|replace('.', ',') }} euro</td>
     </tr>
     <tr>
         <td class="order-summary-headers">Moms {{ order_details[0].tax_percentage }} % totalt</td>
-        <td class="order-summary-values">{{ "%.2f"|format( (order_details|sum(attribute='tax_price_num') * order_details[0].quantity)|round(2)) }}€</td>
+        {% set tax_string = "%.2f"|format( (order_details|sum(attribute='tax_price_num') * order_details[0].quantity)|round(2)) %}
+        {% set tax_final = tax_string|string %}
+        <td class="order-summary-values">{{ tax_final|replace('.', ',') }} euro</td>
+
     </tr>
     <tr>
         <td class="order-summary-headers">Totala priset</td>
-        <td class="order-summary-values-last-value">{{ "%.2f"|format(order_details|sum(attribute='unit_price_num')) }}€</td>
+        {% set total_string = "%.2f"|format(order_details|sum(attribute='unit_price_num')) %}
+        {% set total_final = total_string|string %}
+        <td class="order-summary-values-last-value">{{ total_final|replace('.', ',') }} euro</td>
     </tr>
     </tbody>
 </table>
