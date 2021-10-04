@@ -91,36 +91,48 @@
         {% for value in order_details %}
 
         <tr>
-            <td class="order-details-values-first">{{ value.reservation_name }}, {{ unit }}</td>
+            <td class="order-details-values-first">{{ value.name }}, {{ unit }}</td>
             <td class="order-details-values-middle">{{ value.quantity }}</td>
-            <td class="order-details-values-middle">{{ value.pretax_price }}</td>
+            <td class="order-details-values-middle">{{ value.pretax_price_num|string|replace('.', ',') }}</td>
             <td class="order-details-values-middle">{{ value.tax_percentage }}</td>
-            <td class="order-details-values-last-value">{{ value.pretax_price }}</td>
+            <td class="order-details-values-last-value">{{ (value.pretax_price_num * value.quantity)|string|replace('.', ',') }}</td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
 <table>
+    {% set global = namespace(total=0) %}
     <tbody>
+    {% set ns = namespace(total=0) %}
+    {% for id, prod in order_details|groupby("id") %}
+    {% set temp_price = prod|sum(attribute='pretax_price_num') * prod|sum(attribute='quantity') %}
+    {% set ns.total = ns.total + temp_price %}
+    {% endfor %}
+    {% set global.total = global.total + ns.total %}
     <tr>
         <td class="order-summary-headers">Totala skattefria priset</td>
-        {% set taxfree_string = "%.2f"|format((order_details|sum(attribute='pretax_price_num') * order_details[0].quantity)|round(2)) %}
-        {% set taxfree_final = taxfree_string|string %}
-        <td class="order-summary-values">{{ taxfree_final|replace('.', ',') }} euro</td>
+        {% set tax_free_total = "%.2f"|format(ns.total|round(2)) %}
+        <td class="order-summary-values">{{ tax_free_total|replace('.', ',') }} euro</td>
     </tr>
-    <tr>
-        <td class="order-summary-headers">Moms {{ order_details[0].tax_percentage }} % totalt</td>
-        {% set tax_string = "%.2f"|format( (order_details|sum(attribute='tax_price_num') * order_details[0].quantity)|round(2)) %}
-        {% set tax_final = tax_string|string %}
-        <td class="order-summary-values">{{ tax_final|replace('.', ',') }} euro</td>
-
-    </tr>
+    {% for alv, prod in order_details|groupby("tax_percentage") %}
+        {% if alv not in ['0,00', '0.00']  %}
+        <tr>
+            <td class="order-summary-headers">Moms {{ alv }} % totalt</td>
+            {% set ns = namespace(total=0) %}
+            {% for obj in prod %}
+            {% set ns.total = ns.total + (obj['tax_price_num'] * obj['quantity']) %}
+            {% endfor %}
+            {% set global.total = global.total + ns.total %}
+            {% set tax_string = "%.2f"|format(ns.total|round(2)) %}
+            <td class="order-summary-values">{{ tax_string|replace('.', ',') }} euro</td>
+        </tr>
+        {% endif %}
+    {% endfor %}
     <tr>
         <td class="order-summary-headers">Totala priset</td>
-        {% set total_string = "%.2f"|format(order_details|sum(attribute='unit_price_num')) %}
-        {% set total_final = total_string|string %}
-        <td class="order-summary-values-last-value">{{ total_final|replace('.', ',') }} euro</td>
+        {% set total_string = "%.2f"|format(global.total|round(2)) %}
+        <td class="order-summary-values-last-value">{{ total_string|replace('.', ',') }} euro</td>
 
     </tr>
     </tbody>
