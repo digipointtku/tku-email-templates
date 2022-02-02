@@ -1,0 +1,19 @@
+<p>Hello,</p>
+<p>Your reservation has been approved and is waiting for payment.</p>
+<p>You can pay for the reservation by logging in to Varaamo, go to 'Your reservations' and pressing the 'Pay' button for this specific reservation.</p>
+{% if payment_due_date is defined %}
+<p>Payment due date {{ payment_due_date }}. Unpaid reservations are cancelled after payment due date.</p>
+{% endif %}
+<hr />
+<p>Resource: {{ resource }}</p>
+<p>Unit: {{ unit }}</p>
+<p>Start: {{ begin }}</p>
+<p>End: {{ end }}</p>
+<p></p>
+<hr />
+{% if extra_content is defined %}
+{{ extra_content }}
+{% endif %}
+<p>Your reservation has been approved and is waiting for payment. A separate email confirming the reservation
+including a receipt will be sent after payment has occurred.</p>
+<p>Best regards, Varaamo</p>
