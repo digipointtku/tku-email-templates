@@ -6,6 +6,11 @@
 <p>Börjar: {{ begin }}</p>
 <p>Slutar: {{ end }}</p>
 <p></p>
+{% if order is defined %}
+<hr />
+<!--inject:order:html-->
+<!-- endinject -->
+{% endif %}
 <hr />
 {% if extra_content is defined %}
 {{ extra_content }}

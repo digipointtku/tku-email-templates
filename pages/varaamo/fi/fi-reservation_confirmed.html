@@ -6,6 +6,11 @@
 <p>Alkaa: {{ begin }}</p>
 <p>Loppuu: {{ end }}</p>
 <p></p>
+{% if order is defined %}
+<hr />
+<!--inject:order:html-->
+<!-- endinject -->
+{% endif %}
 <hr />
 {% if extra_content is defined %}
 {{ extra_content }}

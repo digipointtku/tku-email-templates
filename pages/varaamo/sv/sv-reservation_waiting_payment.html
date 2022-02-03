@@ -1,0 +1,19 @@
+<p>Hej,</p>
+<p>Din bokning har godkänts och väntar på betalning.</p>
+<p>Du kan göra betalning genom att logga in på Varaamo, gå till 'Mina bokningar' sidan och tryck på 'Betala' knappen på bokningen.</p>
+{% if payment_due_date is defined %}
+<p>Bokningen måste betalas senast {{ payment_due_date }}. Om bokningen är obetald efter denna datum så annulleras bokningen.</p>
+{% endif %}
+<hr />
+<p>Utrymme: {{ resource }}</p>
+<p>Plats: {{ unit }}</p>
+<p>Börjar: {{ begin }}</p>
+<p>Slutar: {{ end }}</p>
+<p></p>
+<hr />
+{% if extra_content is defined %}
+{{ extra_content }}
+{% endif %}
+<p>Din bokning har godkänts och väntar på betalning. Efter att bokningen har blivit betald så får du bekräftnings e-post som
+innehåller kvitto.</p>
+<p>Med vänliga hälsningar, Varaamo</p>
