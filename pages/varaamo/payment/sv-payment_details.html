@@ -80,60 +80,97 @@
     <table>
         <thead>
         <tr class="order-details-headers-tr">
-            <th class="order-details-headers">Produkt/service</th>
-            <th class="order-details-headers">Mängd</th>
-            <th class="order-details-headers">Enhetspris</th>
-            <th class="order-details-headers">Moms %</th>
-            <th class="order-details-headers-last-value">Totala skattefria</th>
+            <th id="product" scope="col" class="order-details-headers">Produkt/service</th>
+            <th id="quantity" scope="col" class="order-details-headers">Mängd</th>
+            <th id="unit-price" scope="col" class="order-details-headers">Enhetspris</th>
+            <th id="vat" scope="col" class="order-details-headers">Moms %</th>
+            <th id="taxfree-total" scope="col" class="order-details-headers-last-value">Totala skattefria</th>
         </tr>
         </thead>
         <tbody>
-        {% for value in order_details %}
+            {#
+                global variables and their purpose:
+                multiple - determines whether a product's pricing should be shown in separate nested rows.
+                detailed_info - determines if a separate explanation paragraph for detailed pricing is rendered
+                                after the table, true when product has per_period pricing and quantity is more than 2.
+            #}
+            {% set global = namespace(multiple=true) %}
+            {% set global = namespace(detailed_info=false) %}
+            {% for product in order_details %}
+                {% set global.multiple = true %}
+                {% if product.detailed_price|count == 1%}
+                    {% set global.multiple = false %}
+                {% endif %}
+                {% set alternating_highlight = loop.cycle('', 'highlight')  %}
+                <tr class="{{ alternating_highlight }}">
+                    <th id="{{ product.id }}-name" scope="row" class="order-details-values-first">{{ product.name }}, {{ unit }}</th>
+                    {% if 'product_quantity' in product.keys() %}
+                        {# product_quantity key only exists in products with per_period pricing #}
+                        {% set global.multiple = true %}
+                        <td class="order-details-values-middle">{{ product.product_quantity }}</td>
+                        <td class="order-details-values-middle">&nbsp;</td>
+                        <td class="order-details-values-middle">&nbsp;</td>
+                        <td class="order-details-values-last-value">{{ product.product_taxfree_total|string|replace('.',',') }}</td>
+                        {% if product.product_quantity not in [1, 1.0] %}
+                            {% set global.detailed_info = true %}
+                        {% endif %}
+                    {% endif %}
+                    {% if global.multiple == false %}
+                        {# product doesn't have per_period pricing -> list normally in one row #}
+                        {% for key, val in product.detailed_price.items() %}
+                            <td class="order-details-values-middle">{{ val.count }}</td>
+                            <td class="order-details-values-middle">{{ val.pretax|string|replace('.',',') }}</td>
+                            <td class="order-details-values-middle">{{ product.tax_percentage }}</td>
+                            <td class="order-details-values-last-value">{{ val.taxfree_total|string|replace('.',',') }}</td>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+                {% if global.multiple == true %}
+                    {% if global.detailed_info == true %}
+                        <tr class="{{ alternating_highlight }}">
+                            <th class="order-details-values-first" colspan="5">prisfördelning*</th>
+                        </tr>
+                    {% endif %}
 
-        <tr>
-            <td class="order-details-values-first">{{ value.name }}, {{ unit }}</td>
-            <td class="order-details-values-middle">{{ value.quantity }}</td>
-            <td class="order-details-values-middle">{{ value.pretax_price_num|string|replace('.', ',') }}</td>
-            <td class="order-details-values-middle">{{ value.tax_percentage }}</td>
-            <td class="order-details-values-last-value">{{ (value.pretax_price_num * value.quantity)|string|replace('.', ',') }}</td>
-        </tr>
-        {% endfor %}
+                    {% for key, val in product.detailed_price.items() %}
+                        {# render each pricing #}
+                        <tr class="{{ alternating_highlight }}">
+                            {% if key == 'default' %}
+                                <th headers="{{ product.id }}-name" scope="row" class="order-details-values-first-sub">normalpris</th>
+                            {% else %}
+                                <th headers="{{ product.id }}-name" scope="row" class="order-details-values-first-sub">{{ val.time.begin }} - {{ val.time.end }}</th>
+                            {% endif %}
+                            <td class="order-details-values-middle">{{ val.count }}</td>
+                            <td class="order-details-values-middle">{{ val.pretax|string|replace('.',',') }}</td>
+                            <td class="order-details-values-middle">{{ product.tax_percentage }}</td>
+                            <td class="order-details-values-last-value">{{ val.taxfree_total|string|replace('.',',') }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
         </tbody>
     </table>
 </div>
+{% if global.detailed_info == true %}
+<p>*Prisfördelning visas endast av ett stycke av produkten då bokningen innehåller flera stycken av samma produkt. Produktens totala pris räknas genom att multiplicera varje fördelade rads totala skattefria med produktens mängd.</p>
+{% endif %}
 <table>
-    {% set global = namespace(total=0) %}
     <tbody>
-    {% set ns = namespace(total=0) %}
-    {% for id, prod in order_details|groupby("id") %}
-    {% set temp_price = prod|sum(attribute='pretax_price_num') * prod|sum(attribute='quantity') %}
-    {% set ns.total = ns.total + temp_price %}
-    {% endfor %}
-    {% set global.total = global.total + ns.total %}
-    <tr>
-        <td class="order-summary-headers">Totala skattefria priset</td>
-        {% set tax_free_total = "%.2f"|format(ns.total|round(2)) %}
-        <td class="order-summary-values">{{ tax_free_total|replace('.', ',') }} euro</td>
-    </tr>
-    {% for alv, prod in order_details|groupby("tax_percentage") %}
-        {% if alv not in ['0,00', '0.00']  %}
         <tr>
-            <td class="order-summary-headers">Moms {{ alv }} % totalt</td>
-            {% set ns = namespace(total=0) %}
-            {% for obj in prod %}
-            {% set ns.total = ns.total + (obj['tax_price_num'] * obj['quantity']) %}
-            {% endfor %}
-            {% set global.total = global.total + ns.total %}
-            {% set tax_string = "%.2f"|format(ns.total|round(2)) %}
-            <td class="order-summary-values">{{ tax_string|replace('.', ',') }} euro</td>
+            <td class="order-summary-headers">Totala skattefria priset</td>
+            <td class="order-summary-values">{{ order_taxfree_total|string|replace('.',',') }} euro</td>
         </tr>
-        {% endif %}
-    {% endfor %}
-    <tr>
-        <td class="order-summary-headers">Totala priset</td>
-        {% set total_string = "%.2f"|format(global.total|round(2)) %}
-        <td class="order-summary-values-last-value">{{ total_string|replace('.', ',') }} euro</td>
-
-    </tr>
+        {% for key, val in detailed_tax_sums|dictsort %}
+            {% if key not in ['0,00', '0.00'] %}
+                <tr>
+                    <td class="order-summary-headers">Moms {{ key }} % totalt</td>
+                    <td class="order-summary-values">{{ val|string|replace('.',',') }} euro</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        <tr>
+            <td class="order-summary-headers">Totala priset</td>
+            <td class="order-summary-values-last-value">{{ order_total|string|replace('.',',') }} euro</td>
+        </tr>
     </tbody>
 </table>

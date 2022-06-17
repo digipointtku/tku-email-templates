@@ -146,11 +146,12 @@ function generateTemplates(cb, lang = 'FI', files = [], service = 'varaamo') {
                 url: 'file://' + __dirname + '/pages/template/', // specifies the base path for the stylesheet links
                 applyStyleTags: true,
                 applyLinkTags: true,
-                removeStyleTags: true,
+                removeStyleTags: false,
                 removeLinkTags: true
             }))
             .pipe(htmlmin({ // minify html
-                collapseWhitespace: true
+                collapseWhitespace: true,
+                minifyCSS: true
             }))
             .pipe(rename(fileName)) // rename index.html according to fileName
             .pipe(gulp.dest(FILE_PATH[upperCaseService][lang].DEST)) // write to destination
