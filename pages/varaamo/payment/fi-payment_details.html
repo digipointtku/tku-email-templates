@@ -121,9 +121,9 @@
                 {# product doesn't have per_period pricing -> list normally in one row #}
                     {% for key, val in product.detailed_price.items() %}
                         <td class="order-details-values-middle">{{ val.count }}</td>
-                        <td class="order-details-values-middle">{{ val.pretax|string|replace('.',',') }}</td>
+                        <td class="order-details-values-middle">{{ val.taxfree_price|string|replace('.',',') }}</td>
                         <td class="order-details-values-middle">{{ product.tax_percentage }}</td>
-                        <td class="order-details-values-last-value">{{ val.taxfree_total|string|replace('.',',') }}</td>
+                        <td class="order-details-values-last-value">{{ val.taxfree_price_total|string|replace('.',',') }}</td>
                     {% endfor %}
                 {% endif %}
             </tr>
@@ -143,9 +143,9 @@
                     <th headers="{{ product.id }}-name" scope="row" class="order-details-values-first-sub">{{ val.time.begin }} - {{ val.time.end }}</th>
                     {% endif %}
                     <td class="order-details-values-middle">{{ val.count }}</td>
-                    <td class="order-details-values-middle">{{ val.pretax|string|replace('.',',') }}</td>
+                    <td class="order-details-values-middle">{{ val.taxfree_price|string|replace('.',',') }}</td>
                     <td class="order-details-values-middle">{{ product.tax_percentage }}</td>
-                    <td class="order-details-values-last-value">{{ val.taxfree_total|string|replace('.',',') }}</td>
+                    <td class="order-details-values-last-value">{{ val.taxfree_price_total|string|replace('.',',') }}</td>
                 </tr>
                 {% endfor %}
             {% endif %}
