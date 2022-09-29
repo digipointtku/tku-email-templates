@@ -81,60 +81,98 @@
     <table>
         <thead>
         <tr class="order-details-headers-tr">
-            <th class="order-details-headers">Tuote/palvelu</th>
-            <th class="order-details-headers">Määrä</th>
-            <th class="order-details-headers">Yksikköhinta</th>
-            <th class="order-details-headers">Alv %</th>
-            <th class="order-details-headers-last-value">Veroton yhteensä</th>
+            <th id="product" scope="col" class="order-details-headers">Tuote/palvelu</th>
+            <th id="quantity" scope="col" class="order-details-headers">Määrä</th>
+            <th id="unit-price" scope="col" class="order-details-headers">Yksikköhinta</th>
+            <th id="vat" scope="col" class="order-details-headers">Alv %</th>
+            <th id="taxfree-total" scope="col" class="order-details-headers-last-value">Veroton yhteensä</th>
         </tr>
         </thead>
         <tbody>
-        {% for value in order_details %}
+        {#
+            global variables and their purpose:
+            multiple - determines whether a product's pricing should be shown in separate nested rows.
+            detailed_info - determines if a separate explanation paragraph for detailed pricing is rendered
+                            after the table, true when product has per_period pricing and quantity is more than 2.
+        #}
+        {% set global = namespace(multiple=true) %}
+        {% set global = namespace(detailed_info=false) %}
+        {% for product in order_details %}
+            {% set global.multiple = true %}
+            {% if product.detailed_price|count == 1%}
+                {% set global.multiple = false %}
+            {% endif %}
+            {% set alternating_highlight = loop.cycle('', 'highlight')  %}
+            <tr class="{{ alternating_highlight }}">
+                <th id="{{ product.id }}-name" scope="row" class="order-details-values-first">{{ product.name }}, {{ unit }}</th>
+                {% if 'product_quantity' in product.keys() %}
+                {# product_quantity key only exists in products with per_period pricing #}
+                    {% set global.multiple = true %}
+                    <td class="order-details-values-middle">{{ product.product_quantity }}</td>
+                    <td class="order-details-values-middle">&nbsp;</td>
+                    <td class="order-details-values-middle">&nbsp;</td>
+                    <td class="order-details-values-last-value">{{ product.product_taxfree_total|string|replace('.',',') }}</td>
+                    {% if product.product_quantity not in [1, 1.0] %}
+                        {% set global.detailed_info = true %}
+                    {% endif %}
 
-        <tr>
-            <td class="order-details-values-first">{{ value.name }}, {{ unit }}</td>
-            <td class="order-details-values-middle">{{ value.quantity }}</td>
-            <td class="order-details-values-middle">{{ value.pretax_price_num|string|replace('.', ',') }}</td>
-            <td class="order-details-values-middle">{{ value.tax_percentage }}</td>
-            <td class="order-details-values-last-value">{{ (value.pretax_price_num * value.quantity)|string|replace('.', ',') }}</td>
-        </tr>
+                {% endif %}
+                {% if global.multiple == false %}
+                {# product doesn't have per_period pricing -> list normally in one row #}
+                    {% for key, val in product.detailed_price.items() %}
+                        <td class="order-details-values-middle">{{ val.count }}</td>
+                        <td class="order-details-values-middle">{{ val.taxfree_price|string|replace('.',',') }}</td>
+                        <td class="order-details-values-middle">{{ product.tax_percentage }}</td>
+                        <td class="order-details-values-last-value">{{ val.taxfree_price_total|string|replace('.',',') }}</td>
+                    {% endfor %}
+                {% endif %}
+            </tr>
+            {% if global.multiple == true %}
+                {% if global.detailed_info == true %}
+                    <tr class="{{ alternating_highlight }}">
+                        <th class="order-details-values-first" colspan="5">1kpl hintaerittely*</th>
+                    </tr>
+                {% endif %}
+
+                {% for key, val in product.detailed_price.items() %}
+                {# render each pricing #}
+                <tr class="{{ alternating_highlight }}">
+                    {% if key == 'default' %}
+                    <th headers="{{ product.id }}-name" scope="row" class="order-details-values-first-sub">normaalihinta</th>
+                    {% else %}
+                    <th headers="{{ product.id }}-name" scope="row" class="order-details-values-first-sub">{{ val.time.begin }} - {{ val.time.end }}</th>
+                    {% endif %}
+                    <td class="order-details-values-middle">{{ val.count }}</td>
+                    <td class="order-details-values-middle">{{ val.taxfree_price|string|replace('.',',') }}</td>
+                    <td class="order-details-values-middle">{{ product.tax_percentage }}</td>
+                    <td class="order-details-values-last-value">{{ val.taxfree_price_total|string|replace('.',',') }}</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
 </div>
+{% if global.detailed_info == true %}
+<p>*Ainoastaan yhden kappaleen hinnat eritellään jos varaus sisältää useamman kappaleen samaa tuotetta. Loppusumma koostuu eriteltyjen rivien summista kerrottuna tuotteen lukumäärällä.</p>
+{% endif %}
 <table>
-    {% set global = namespace(total=0) %}
     <tbody>
-    {% set ns = namespace(total=0) %}
-    {% for id, prod in order_details|groupby("id") %}
-        {% set temp_price = prod|sum(attribute='pretax_price_num') * prod|sum(attribute='quantity') %}
-        {% set ns.total = ns.total + temp_price %}
-    {% endfor %}
-    {% set global.total = global.total + ns.total %}
     <tr>
         <td class="order-summary-headers">Veroton hinta yhteensä</td>
-        {% set tax_free_total = "%.2f"|format(ns.total|round(2)) %}
-        <td class="order-summary-values">{{ tax_free_total|replace('.', ',') }} euroa</td>
+        <td class="order-summary-values">{{ order_taxfree_total|string|replace('.',',') }} euroa</td>
     </tr>
-
-    {% for alv, prod in order_details|groupby("tax_percentage") %}
-        {% if alv not in ['0,00', '0.00']  %}
+    {% for key, val in detailed_tax_sums|dictsort %}
+        {% if key not in ['0,00', '0.00'] %}
             <tr>
-                <td class="order-summary-headers">ALV {{ alv }} % yhteensä</td>
-                {% set ns = namespace(total=0) %}
-                {% for obj in prod %}
-                    {% set ns.total = ns.total + (obj['tax_price_num'] * obj['quantity']) %}
-                {% endfor %}
-                {% set global.total = global.total + ns.total %}
-                {% set tax_string = "%.2f"|format(ns.total|round(2)) %}
-                <td class="order-summary-values">{{ tax_string|replace('.', ',') }} euroa</td>
+                <td class="order-summary-headers">ALV {{ key }} % yhteensä</td>
+                <td class="order-summary-values">{{ val|string|replace('.',',') }} euroa</td>
             </tr>
         {% endif %}
     {% endfor %}
     <tr>
         <td class="order-summary-headers">Lasku yhteensä</td>
-        {% set total_string = "%.2f"|format(global.total|round(2)) %}
-        <td class="order-summary-values-last-value">{{ total_string|replace('.', ',') }} euroa</td>
+        <td class="order-summary-values-last-value">{{ order_total|string|replace('.',',') }} euroa</td>
     </tr>
     </tbody>
 </table>

@@ -89,6 +89,11 @@
 .order-details-values-first {
     padding: 5px;
 }
+
+.order-details-values-first-sub {
+    padding: 5px;
+
+}
 .order-details-values-middle {
     text-align: left;
     padding: 5px;
