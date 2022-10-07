@@ -1,5 +1,10 @@
 <p>Hei,</p>
 <p>Varauksesi on hyväksytty.</p>
+{% if order is defined %}
+{% if order.payment_method == 'cash' %}
+<p>Varauksen maksaminen tapahtuu paikan päällä.</p>
+{% endif%}
+{% endif %}
 <hr />
 <p>Palvelu: {{ resource }}</p>
 <p>Toimipiste: {{ unit }}</p>

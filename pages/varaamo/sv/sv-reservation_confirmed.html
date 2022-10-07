@@ -1,5 +1,10 @@
 <p>Hej,</p>
 <p>Din bokning har bekräftats.</p>
+{% if order is defined %}
+{% if order.payment_method == 'cash' %}
+<p>Bokningens betalning sker på plats.</p>
+{% endif%}
+{% endif %}
 <hr />
 <p>Utrymme: {{ resource }}</p>
 <p>Plats: {{ unit }}</p>
