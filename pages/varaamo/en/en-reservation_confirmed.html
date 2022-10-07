@@ -1,5 +1,10 @@
 <p>Hello,</p>
 <p>Your reservation has been confirmed.</p>
+{% if order is defined %}
+{% if order.payment_method == 'cash' %}
+<p>The reservation payment will be done on-site.</p>
+{% endif%}
+{% endif %}
 <hr />
 <p>Resource: {{ resource }}</p>
 <p>Unit: {{ unit }}</p>
