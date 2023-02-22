@@ -25,6 +25,10 @@
 {% if number_of_participants is defined %}
     <p>Osallistujamäärä: {{ number_of_participants }}</p>
 {% endif %}
+{% if universal_data is defined and universal_data %}
+<!--inject:universal-field:html-->
+<!-- endinject -->
+{% endif %}
 {% if require_assistance is defined and require_assistance %}
     <p>Varaaja tarvitsee opastusta.</p>
 {% endif %}

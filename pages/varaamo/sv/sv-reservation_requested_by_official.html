@@ -28,6 +28,10 @@
 {% if number_of_participants is defined %}
 <p>Antal deltagare: {{ number_of_participants }}</p>
 {% endif %}
+{% if universal_data is defined and universal_data %}
+<!--inject:universal-field:html-->
+<!-- endinject -->
+{% endif %}
 <hr />
 {% if extra_content is defined %}
 {{ extra_content }}

@@ -141,6 +141,14 @@ function generateTemplates(cb, lang = 'FI', files = [], service = 'varaamo') {
                 removeTags: true,
                 quiet: true,
             }))
+            .pipe(inject(gulp.src('./pages/template/universal_field.html'), { // inject universal-field html
+                starttag:  '<!-- inject:universal-field:html -->',
+                transform: function (filePath, file) {
+                    return file.contents.toString('utf8')
+                },
+                removeTags: true,
+                quiet: true,
+            }))
             .pipe(replace(MAP_URLS.SERVICE_MAP.SRC, MAP_URLS.SERVICE_MAP[lang])) // replace map url placeholder
             .pipe(inlineCss({
                 url: 'file://' + __dirname + '/pages/template/', // specifies the base path for the stylesheet links
