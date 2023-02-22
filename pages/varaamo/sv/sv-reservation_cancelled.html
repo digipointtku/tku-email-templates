@@ -21,5 +21,9 @@
 {% if number_of_participants is defined %}
     <p>Antal deltagare: {{ number_of_participants }}</p>
 {% endif %}
+{% if universal_data is defined and universal_data %}
+<!--inject:universal-field:html-->
+<!-- endinject -->
+{% endif %}
 <p>Välkommen åter!</p>
 <p>Med vänliga hälsningar, Varaamo</p>

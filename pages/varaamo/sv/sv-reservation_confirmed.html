@@ -10,6 +10,10 @@
 <p>Plats: {{ unit }}</p>
 <p>Börjar: {{ begin }}</p>
 <p>Slutar: {{ end }}</p>
+{% if universal_data is defined and universal_data %}
+<!--inject:universal-field:html-->
+<!-- endinject -->
+{% endif %}
 <p></p>
 {% if order is defined %}
 <hr />
