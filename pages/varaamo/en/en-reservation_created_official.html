@@ -35,6 +35,9 @@
 {% if extra_question is defined and extra_question %}
     <p>Additional question: {{ extra_question }}</p>
 {% endif %}
+{% if comments is defined and comments %}
+    <p>Comments: {{ comments }}</p>
+{% endif %}
 {% if extra_content is defined and extra_content %}
     {{ extra_content }}
 {% endif %}
