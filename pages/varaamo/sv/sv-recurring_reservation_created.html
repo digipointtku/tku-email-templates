@@ -28,7 +28,7 @@
 {% if number_of_participants is defined %}
     <p>Antal deltagare: {{ number_of_participants }}</p>
 {% endif %}
-{% if unit is defined %}
+{% if unit_map_service_id is defined %}
 {% set linkUrl = '<--map_url-->' + unit_map_service_id|string + '#' %}
     <a href="{{ linkUrl }}">Visa på servicekartan</a>
 {% endif %}
