@@ -1,25 +1,18 @@
 <p>Hello,</p>
-<p>We have modified your reservation.</p>
+<p>Service’s personnel have modified your reservation.</p>
 <p>Updated reservation details:</p>
 <hr />
 <p>Resource: {{ resource }}</p>
+<p>Time: {{ time_range_alt  }}</p>
 <p>Unit: {{ unit }}</p>
-<p>Start: {{ begin }}</p>
-<p>End: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Address: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <p>Reserver name: {{ reserver_name }}</p>
 <p>Reserver email: {{ reserver_email_address }}</p>
 {% if reserver_phone_number is defined and reserver_phone_number %}
 <p>Reserver phone number: {{ reserver_phone_number }}</p>
-{% endif %}
-{% if event_subject is defined and event_subject %}
-    <p>Name of reservation: {{ event_subject }}</p>
-{% endif %}
-{% if event_description is defined and event_description %}
-    <p>Reservation description: {{ event_description }}</p>
-{% endif %}
-{% if number_of_participants is defined %}
-    <p>Number of participants: {{ number_of_participants }}</p>
 {% endif %}
 {% if universal_data is defined and universal_data %}
 <!--inject:universal-field:html-->
@@ -27,6 +20,6 @@
 {% endif %}
 {% if unit_map_service_id is defined %}
 {% set linkUrl = '<--map_url-->' + unit_map_service_id|string + '#' %}
-    <a href="{{ linkUrl }}">Show location on the servicemap</a>
+<a href="{{ linkUrl }}">Show location on the servicemap</a>
 {% endif %}
 <p>Best regards, Varaamo</p>

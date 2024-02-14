@@ -3,9 +3,11 @@
 <p>Reservation details:</p>
 <hr />
 <p>Resource: {{ resource }}</p>
+<p>Time: {{ time_range_alt  }}</p>
 <p>Unit: {{ unit }}</p>
-<p>Start: {{ begin }}</p>
-<p>End: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Address: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <p>Reserver name: {{ reserver_name }}</p>
 <p>Reserver email: {{ reserver_email_address }}</p>

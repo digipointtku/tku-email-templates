@@ -3,9 +3,11 @@
 <p>Tässä varauksen uudet tiedot:</p>
 <hr />
 <p>Palvelu: {{ resource }}</p>
+<p>Aika: {{ time_range_alt  }}</p>
 <p>Toimipiste: {{ unit }}</p>
-<p>Alkaa: {{ begin }}</p>
-<p>Loppuu: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Osoite: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <p>Varaajan nimi: {{ reserver_name }}</p>
 <p>Varaajan sähköposti: {{ reserver_email_address }}</p>

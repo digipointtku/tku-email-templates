@@ -1,5 +1,5 @@
 <p>Hello,</p>
-<p>Your reservation has been confirmed.</p>
+<p>Your reservation has been approved.</p>
 {% if order is defined %}
 {% if order.payment_method == 'cash' %}
 <p>The reservation payment will be done on-site.</p>
@@ -7,9 +7,11 @@
 {% endif %}
 <hr />
 <p>Resource: {{ resource }}</p>
+<p>Time: {{ time_range_alt  }}</p>
 <p>Unit: {{ unit }}</p>
-<p>Start: {{ begin }}</p>
-<p>End: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Address: {{ unit_address }}</p>
+{% endif %}
 {% if universal_data is defined and universal_data %}
 <!--inject:universal-field:html-->
 <!-- endinject -->

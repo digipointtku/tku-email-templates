@@ -19,17 +19,12 @@
 {% if reserver_phone_number is defined and reserver_phone_number %}
 <p>Varaajan puhelinnumero: {{ reserver_phone_number }}</p>
 {% endif %}
-{% if event_subject is defined and event_subject %}
-    <p>Varauksen nimi: {{ event_subject }}</p>
-{% endif %}
-{% if event_description is defined and event_description %}
-    <p>Varauksen kuvaus: {{ event_description }}</p>
-{% endif %}
-{% if number_of_participants is defined %}
-    <p>Osallistujamäärä: {{ number_of_participants }}</p>
+{% if universal_data is defined and universal_data %}
+<!--inject:universal-field:html-->
+<!-- endinject -->
 {% endif %}
 {% if unit_map_service_id is defined %}
 {% set linkUrl = '<--map_url-->' + unit_map_service_id|string + '#' %}
-    <a href="{{ linkUrl }}">Näytä sijainti palvelukartalla</a>
+<a href="{{ linkUrl }}">Näytä sijainti palvelukartalla</a>
 {% endif %}
 <p>Ystävällisin terveisin, Varaamo</p>

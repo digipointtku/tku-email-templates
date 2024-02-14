@@ -1,11 +1,12 @@
 <p>Hei,</p>
-<p>ja kiitokset Varaamon käytöstä!</p>
-<p>Alustava varaus on tehty puolestasi:</p>
+<p>Seuraava alustava varaus on tehty puolestasi:</p>
 <hr />
 <p>Palvelu: {{ resource }}</p>
+<p>Aika: {{ time_range_alt  }}</p>
 <p>Toimipiste: {{ unit }}</p>
-<p>Alkaa: {{ begin }}</p>
-<p>Loppuu: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Osoite: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 {% if reserver_name is defined and reserver_name %}
 <p>Varaajan nimi: {{ reserver_name }}</p>
@@ -15,18 +16,6 @@
 {% endif %}
 {% if reserver_phone_number is defined and reserver_phone_number %}
 <p>Varaajan puhelinnumero: {{ reserver_phone_number }}</p>
-{% endif %}
-{% if home_municipality_id is defined and home_municipality_id %}
-<p>Varaajan kotikunta: {{ home_municipality_id }}</p>
-{% endif %}
-{% if event_subject is defined and event_subject %}
-<p>Varauksen nimi: {{ event_subject }}</p>
-{% endif %}
-{% if event_description is defined and event_description %}
-<p>Varauksen kuvaus: {{ event_description }}</p>
-{% endif %}
-{% if number_of_participants is defined %}
-<p>Osallistujamäärä: {{ number_of_participants }}</p>
 {% endif %}
 {% if universal_data is defined and universal_data %}
 <!--inject:universal-field:html-->

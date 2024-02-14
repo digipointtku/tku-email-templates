@@ -2,9 +2,11 @@
 <p>En kund har avbokat följande reservation:</p>
 <hr />
 <p>Utrymme: {{ resource }}</p>
+<p>Tid: {{ time_range_alt  }}</p>
 <p>Plats: {{ unit }}</p>
-<p>Börjar: {{ begin }}</p>
-<p>Slutar: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Adress: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <p>Bokarens namn: {{ reserver_name }}</p>
 <p>Bokarens e-post: {{ reserver_email_address }}</p>
@@ -13,23 +15,17 @@
 {% else %}
 <p>Bokarens telefonnummer: --</p>
 {% endif %}
-{% if home_municipality_id is defined and home_municipality_id %}
-<p>Bokarens hemkommun: {{ home_municipality_id }}</p>
-{% endif %}
 {% if event_subject is defined and event_subject %}
-    <p>Bokningens namn: {{ event_subject }}</p>
+<p>Bokningens namn: {{ event_subject }}</p>
 {% endif %}
 {% if event_description is defined and event_description %}
-    <p>Bokningens beskrivning: {{ event_description }}</p>
+<p>Bokningens beskrivning: {{ event_description }}</p>
 {% endif %}
 {% if number_of_participants is defined %}
-    <p>Antal deltagare: {{ number_of_participants }}</p>
+<p>Antal deltagare: {{ number_of_participants }}</p>
 {% endif %}
 {% if universal_data is defined and universal_data %}
 <!--inject:universal-field:html-->
 <!-- endinject -->
-{% endif %}
-{% if extra_content is defined and extra_content %}
-{{ extra_content }}
 {% endif %}
 <p>Med vänliga hälsningar, Varaamo</p>

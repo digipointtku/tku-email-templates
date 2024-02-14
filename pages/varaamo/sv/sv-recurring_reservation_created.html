@@ -19,14 +19,9 @@
 {% if reserver_phone_number is defined and reserver_phone_number %}
 <p>Bokarens telefonnummer: {{ reserver_phone_number }}</p>
 {% endif %}
-{% if event_subject is defined and event_subject %}
-    <p>Bokningens namn: {{ event_subject }}</p>
-{% endif %}
-{% if event_description is defined and event_description %}
-    <p>Bokningens beskrivning: {{ event_description }}</p>
-{% endif %}
-{% if number_of_participants is defined %}
-    <p>Antal deltagare: {{ number_of_participants }}</p>
+{% if universal_data is defined and universal_data %}
+<!--inject:universal-field:html-->
+<!-- endinject -->
 {% endif %}
 {% if unit_map_service_id is defined %}
 {% set linkUrl = '<--map_url-->' + unit_map_service_id|string + '#' %}

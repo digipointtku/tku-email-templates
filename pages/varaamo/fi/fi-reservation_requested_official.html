@@ -2,9 +2,11 @@
 <p>Uusi alustava varaus on tehty:</p>
 <hr />
 <p>Palvelu: {{ resource }}</p>
+<p>Aika: {{ time_range_alt  }}</p>
 <p>Toimipiste: {{ unit }}</p>
-<p>Alkaa: {{ begin }}</p>
-<p>Loppuu: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Osoite: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 {% if reserver_name is defined and reserver_name %}
 <p>Varaajan nimi: {{ reserver_name }}</p>
