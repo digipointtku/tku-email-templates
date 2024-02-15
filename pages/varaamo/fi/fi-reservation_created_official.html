@@ -2,9 +2,11 @@
 <p>Asiakas on tehnyt seuraavan varauksen:</p>
 <hr />
 <p>Palvelu: {{ resource }}</p>
+<p>Aika: {{ time_range_alt  }}</p>
 <p>Toimipiste: {{ unit }}</p>
-<p>Alkaa: {{ begin }}</p>
-<p>Loppuu: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Osoite: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <p>Varaajan nimi: {{ reserver_name }}</p>
 <p>Varaajan sähköposti: {{ reserver_email_address }}</p>
@@ -17,28 +19,28 @@
 <p>Varaajan kotikunta: {{ home_municipality_id }}</p>
 {% endif %}
 {% if event_subject is defined and event_subject %}
-    <p>Varauksen nimi: {{ event_subject }}</p>
+<p>Varauksen nimi: {{ event_subject }}</p>
 {% endif %}
 {% if event_description is defined and event_description %}
-    <p>Varauksen kuvaus: {{ event_description }}</p>
+<p>Varauksen kuvaus: {{ event_description }}</p>
 {% endif %}
 {% if number_of_participants is defined %}
-    <p>Osallistujamäärä: {{ number_of_participants }}</p>
+<p>Osallistujamäärä: {{ number_of_participants }}</p>
 {% endif %}
 {% if universal_data is defined and universal_data %}
 <!--inject:universal-field:html-->
 <!-- endinject -->
 {% endif %}
 {% if require_assistance is defined and require_assistance %}
-    <p>Varaaja tarvitsee opastusta.</p>
+<p>Varaaja tarvitsee opastusta.</p>
 {% endif %}
 {% if extra_question is defined and extra_question %}
-    <p>Lisäkysymys: {{ extra_question }}</p>
+<p>Lisäkysymys: {{ extra_question }}</p>
 {% endif %}
 {% if comments is defined and comments %}
-    <p>Kommentit: {{ comments }}</p>
+<p>Kommentit: {{ comments }}</p>
 {% endif %}
 {% if extra_content is defined and extra_content %}
-    {{ extra_content }}
+{{ extra_content }}
 {% endif %}
 <p>Ystävällisin terveisin, Varaamo</p>

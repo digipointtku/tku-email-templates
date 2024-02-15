@@ -2,9 +2,11 @@
 <p>A customer has made the following reservation:</p>
 <hr />
 <p>Resource: {{ resource }}</p>
+<p>Time: {{ time_range_alt  }}</p>
 <p>Unit: {{ unit }}</p>
-<p>Start: {{ begin }}</p>
-<p>End: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Address: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <p>Reserver name: {{ reserver_name }}</p>
 <p>Reserver email: {{ reserver_email_address }}</p>
@@ -17,28 +19,28 @@
 <p>Reserver home municipality: {{ home_municipality_id }}</p>
 {% endif %}
 {% if event_subject is defined and event_subject %}
-    <p>Name of reservation: {{ event_subject }}</p>
+<p>Name of reservation: {{ event_subject }}</p>
 {% endif %}
 {% if event_description is defined and event_description %}
-    <p>Reservation description: {{ event_description }}</p>
+<p>Reservation description: {{ event_description }}</p>
 {% endif %}
 {% if number_of_participants is defined %}
-    <p>Number of participants: {{ number_of_participants }}</p>
+<p>Number of participants: {{ number_of_participants }}</p>
 {% endif %}
 {% if universal_data is defined and universal_data %}
 <!--inject:universal-field:html-->
 <!-- endinject -->
 {% endif %}
 {% if require_assistance is defined and require_assistance %}
-    <p>Reserver needs assistance.</p>
+<p>Reserver needs assistance.</p>
 {% endif %}
 {% if extra_question is defined and extra_question %}
-    <p>Additional question: {{ extra_question }}</p>
+<p>Additional question: {{ extra_question }}</p>
 {% endif %}
 {% if comments is defined and comments %}
-    <p>Comments: {{ comments }}</p>
+<p>Comments: {{ comments }}</p>
 {% endif %}
 {% if extra_content is defined and extra_content %}
-    {{ extra_content }}
+{{ extra_content }}
 {% endif %}
 <p>Best regards, Varaamo</p>

@@ -1,10 +1,12 @@
 <p>Hej,</p>
-<p>Din bokning har blivit avslagen.</p>
+<p>Personalen på servicen har avslagit den tid du bokade.</p>
 <hr />
 <p>Utrymme: {{ resource }}</p>
+<p>Tid: {{ time_range_alt  }}</p>
 <p>Plats: {{ unit }}</p>
-<p>Börjar: {{ begin }}</p>
-<p>Slutar: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Adress: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <p>Närmare grunder för bokningens avslagning fås från den ifrågavarande platsens personal.</p>
 <p>Med vänliga hälsningar, Varaamo</p>

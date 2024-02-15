@@ -6,9 +6,11 @@
 {% endif %}
 <hr />
 <p>Utrymme: {{ resource }}</p>
+<p>Tid: {{ time_range_alt  }}</p>
 <p>Plats: {{ unit }}</p>
-<p>Börjar: {{ begin }}</p>
-<p>Slutar: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Adress: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <hr />
 {% if extra_content is defined %}

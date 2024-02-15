@@ -1,10 +1,12 @@
 <p>Hello,</p>
-<p>Your reservation was denied.</p>
+<p>The service personnel did not approve your reservation.</p>
 <hr />
 <p>Resource: {{ resource }}</p>
+<p>Time: {{ time_range_alt  }}</p>
 <p>Unit: {{ unit }}</p>
-<p>Start: {{ begin }}</p>
-<p>End: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Address: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <p>If you have questions regarding the reservation denial then you can contact the resource's staff.</p>
 <p>Best regards, Varaamo</p>

@@ -1,11 +1,13 @@
 <p>Hei,</p>
-<p>Olemme valitettavasti joutuneet hylkäämään varaamasi ajan.</p>
+<p>Palvelun henkilökunta on hylännyt varausanomuksesi.</p>
 <p>Ole hyvä, ja varaa uusi aika.</p>
 <hr />
 <p>Palvelu: {{ resource }}</p>
+<p>Aika: {{ time_range_alt  }}</p>
 <p>Toimipiste: {{ unit }}</p>
-<p>Alkaa: {{ begin }}</p>
-<p>Loppuu: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Osoite: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <p>Varauksen hylkäämiseen liittyvät tarkemmat perusteet voitte tiedustella palvelusta vastaavalta henkilökunnalta.</p>
 <p>Ystävällisin terveisin, Varaamo</p>

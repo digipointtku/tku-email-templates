@@ -7,9 +7,11 @@
 {% endif %}
 <hr />
 <p>Palvelu: {{ resource }}</p>
+<p>Aika: {{ time_range_alt  }}</p>
 <p>Toimipiste: {{ unit }}</p>
-<p>Alkaa: {{ begin }}</p>
-<p>Loppuu: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Osoite: {{ unit_address }}</p>
+{% endif %}
 {% if universal_data is defined and universal_data %}
 <!--inject:universal-field:html-->
 <!-- endinject -->

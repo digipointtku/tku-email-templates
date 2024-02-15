@@ -1,18 +1,20 @@
 <p>Hei,</p>
 <p>Varauksesi on hyväksytty ja odottaa maksua.</p>
-<p>Voit siirtyä varauksen maksuun kirjautumalla Varaamoon ja Omat varaukset -sivulta painamalla 'Maksa'-nappia tämän varauksen kohdalta.</p>
+<p>Maksaaksesi kirjaudu Varaamoon. Omat varaukset -sivulla paina 'Maksa'-painiketta tämän varauksen kohdalla. </p>
 {% if payment_due_date is defined %}
-<p>Maksettava viimeistään {{ payment_due_date }} mennessä. Tämän jälkeen maksamatta jäänyt varaus peruutetaan.</p>
+<p>Varaus on maksettava viimeistään {{ payment_due_date }} mennessä. Tämän jälkeen maksamatta jäänyt varaus peruutetaan.</p>
 {% endif %}
 <hr />
 <p>Palvelu: {{ resource }}</p>
+<p>Aika: {{ time_range_alt  }}</p>
 <p>Toimipiste: {{ unit }}</p>
-<p>Alkaa: {{ begin }}</p>
-<p>Loppuu: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Osoite: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 <hr />
 {% if extra_content is defined %}
 {{ extra_content }}
 {% endif %}
-<p>Varauksesi on hyväksytty ja odottaa maksua. Kun olet maksanut saat erillisen sähköpostin, joka sisältää tilausvahvistuksen.</p>
+<p>Varauksesi on hyväksytty ja odottaa maksua. Kun olet suorittanut maksun, saat erillisen sähköpostiviestin, joka sisältää tilausvahvistuksen.</p>
 <p>Ystävällisin terveisin, Varaamo</p>

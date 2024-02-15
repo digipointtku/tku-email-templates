@@ -2,9 +2,11 @@
 <p>A new preliminary reservation has been made:</p>
 <hr />
 <p>Resource: {{ resource }}</p>
+<p>Time: {{ time_range_alt  }}</p>
 <p>Unit: {{ unit }}</p>
-<p>Start: {{ begin }}</p>
-<p>End: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Address: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 {% if reserver_name is defined and reserver_name %}
 <p>Reserver name: {{ reserver_name }}</p>

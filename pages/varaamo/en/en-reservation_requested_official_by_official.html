@@ -1,11 +1,12 @@
 <p>Hello,</p>
-<p>and thanks for using Varaamo!</p>
 <p>A preliminary reservation has been made for you:</p>
 <hr />
 <p>Resource: {{ resource }}</p>
+<p>Time: {{ time_range_alt  }}</p>
 <p>Unit: {{ unit }}</p>
-<p>Start: {{ begin }}</p>
-<p>End: {{ end }}</p>
+{% if not takes_place_virtually and unit_address is defined %}
+<p>Address: {{ unit_address }}</p>
+{% endif %}
 <p></p>
 {% if reserver_name is defined and reserver_name %}
 <p>Reserver name: {{ reserver_name }}</p>
@@ -15,18 +16,6 @@
 {% endif %}
 {% if reserver_phone_number is defined and reserver_phone_number %}
 <p>Reserver phone: {{ reserver_phone_number }}</p>
-{% endif %}
-{% if home_municipality_id is defined and home_municipality_id %}
-<p>Reserver home municipality: {{ home_municipality_id }}</p>
-{% endif %}
-{% if event_subject is defined and event_subject %}
-<p>Reservation name: {{ event_subject }}</p>
-{% endif %}
-{% if event_description is defined and event_description %}
-<p>Reservation description: {{ event_description }}</p>
-{% endif %}
-{% if number_of_participants is defined %}
-<p>Number of participants: {{ number_of_participants }}</p>
 {% endif %}
 {% if universal_data is defined and universal_data %}
 <!--inject:universal-field:html-->
