@@ -1,0 +1,15 @@
+<p>Hello,</p>
+<p>Your reservation has been cancelled. Reservation details:</p>
+<hr />
+<p>Resource: {{ resource }}</p>
+<p>Time: {{ time_range_alt  }}</p>
+{% if universal_data is defined and universal_data %}
+<!--inject:universal-field:html-->
+<!-- endinject -->
+{% endif %}
+<p>Reserver name: {{ reserver_name }}</p>
+<p>Reserver email: {{ reserver_email_address }}</p>
+{% if reserver_phone_number is defined and reserver_phone_number %}
+<p>Reserver phone number: {{ reserver_phone_number }}</p>
+{% endif %}
+<p>Best regards, Varaamo</p>

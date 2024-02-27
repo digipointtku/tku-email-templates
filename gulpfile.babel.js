@@ -21,7 +21,11 @@ gulp.task('build:monitori:finnish', generateMonitoriFI);
 gulp.task('build:monitori:swedish', generateMonitoriSV);
 gulp.task('build:monitori:english', generateMonitoriEN);
 gulp.task('build:monitori:all', gulp.series('build:monitori:finnish', 'build:monitori:swedish', 'build:monitori:english'));
-gulp.task('default', gulp.series('build:varaamo:all', 'build:monitori:all'));
+gulp.task('build:digineuvoja:finnish', generateDigineuvojaFI);
+gulp.task('build:digineuvoja:swedish', generateDigineuvojaSV);
+gulp.task('build:digineuvoja:english', generateDigineuvojaEN);
+gulp.task('build:digineuvoja:all', gulp.series('build:digineuvoja:finnish', 'build:digineuvoja:swedish', 'build:digineuvoja:english'));
+gulp.task('default', gulp.series('build:varaamo:all', 'build:monitori:all', 'build:digineuvoja:all'));
 
 /**
  * Returns an array with the name.extension of each .html file found at rootPath
@@ -92,6 +96,33 @@ function generateMonitoriSV(cb) {
 function generateMonitoriEN(cb) {
     const fileNames = getFileNames(FILES.FILE_PATH.MONITORI.EN.ROOT);
     generateTemplates(cb, 'EN', fileNames, 'monitori');
+    cb();
+}
+
+/**
+ * Generate Finnish Digineuvoja templates
+ */
+function generateDigineuvojaFI(cb) {
+    const fileNames = getFileNames(FILES.FILE_PATH.DIGINEUVOJA.FI.ROOT);
+    generateTemplates(cb, 'FI', fileNames, 'digineuvoja');
+    cb();
+}
+
+/**
+ * Generate Swedish Digineuvoja templates
+ */
+function generateDigineuvojaSV(cb) {
+    const fileNames = getFileNames(FILES.FILE_PATH.DIGINEUVOJA.SV.ROOT);
+    generateTemplates(cb, 'SV', fileNames, 'digineuvoja');
+    cb();
+}
+
+/**
+ * Generate English Digineuvoja templates
+ */
+function generateDigineuvojaEN(cb) {
+    const fileNames = getFileNames(FILES.FILE_PATH.DIGINEUVOJA.EN.ROOT);
+    generateTemplates(cb, 'EN', fileNames, 'digineuvoja');
     cb();
 }
 
