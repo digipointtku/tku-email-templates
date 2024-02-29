@@ -12,7 +12,11 @@
     "build:monitori:finnish": "npx gulp build:monitori:finnish",
     "build:monitori:swedish": "npx gulp build:monitori:swedish",
     "build:monitori:english": "npx gulp build:monitori:english",
-    "build:monitori:all": "npx gulp build:monitori:all"
+    "build:monitori:all": "npx gulp build:monitori:all",
+    "build:digineuvoja:finnish": "npx gulp build:digineuvoja:finnish",
+    "build:digineuvoja:swedish": "npx gulp build:digineuvoja:swedish",
+    "build:digineuvoja:english": "npx gulp build:digineuvoja:english",
+    "build:digineuvoja:all": "npx gulp build:digineuvoja:all"
   },
   "author": "",
   "license": "MIT",

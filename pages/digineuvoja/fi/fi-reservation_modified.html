@@ -1,0 +1,15 @@
+<p>Hei,</p>
+<p>Varaustasi on muokattu. Tässä varauksesi tiedot:</p>
+<hr />
+<p>Palvelu: {{ resource }}</p>
+<p>Aika: {{ time_range_alt  }}</p>
+{% if universal_data is defined and universal_data %}
+<!--inject:universal-field:html-->
+<!-- endinject -->
+{% endif %}
+<p>Varaajan nimi: {{ reserver_name }}</p>
+<p>Varaajan sähköposti: {{ reserver_email_address }}</p>
+{% if reserver_phone_number is defined and reserver_phone_number %}
+<p>Varaajan puhelinnumero: {{ reserver_phone_number }}</p>
+{% endif %}
+<p>Ystävällisin terveisin, Varaamo</p>

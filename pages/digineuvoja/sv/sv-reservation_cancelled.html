@@ -1,0 +1,15 @@
+<p>Hej,</p>
+<p>Din bokning har blivit avbruten. Bokningsdetaljer:</p>
+<hr />
+<p>Utrymme: {{ resource }}</p>
+<p>Tid: {{ time_range_alt  }}</p>
+{% if universal_data is defined and universal_data %}
+<!--inject:universal-field:html-->
+<!-- endinject -->
+{% endif %}
+<p>Bokarens namn: {{ reserver_name }}</p>
+<p>Bokarens e-post: {{ reserver_email_address }}</p>
+{% if reserver_phone_number is defined and reserver_phone_number %}
+<p>Bokarens telefonnummer: {{ reserver_phone_number }}</p>
+{% endif %}
+<p>Med vänliga hälsningar, Varaamo</p>

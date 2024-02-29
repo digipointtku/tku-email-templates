@@ -89,6 +89,25 @@ export default {
                 DEST: 'build/monitori/en/',
                 ROOT: '/pages/monitori/en/',
             }
+        },
+
+        /** @see {@link ServiceSpecificObject} **/
+        DIGINEUVOJA: {
+            /** @type {LanguageSpecificObject} **/
+            FI: {
+                DEST: 'build/digineuvoja/fi/',
+                ROOT: '/pages/digineuvoja/fi/'
+            },
+            /** @type {LanguageSpecificObject} **/
+            SV: {
+                DEST: 'build/digineuvoja/sv/',
+                ROOT: '/pages/digineuvoja/sv/',
+            },
+            /** @type {LanguageSpecificObject} **/
+            EN: {
+                DEST: 'build/digineuvoja/en/',
+                ROOT: '/pages/digineuvoja/en/',
+            }
         }
     },
 
